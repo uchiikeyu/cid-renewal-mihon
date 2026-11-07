@@ -96,6 +96,10 @@
     let dpr = 1, W = 0, H = 0, running = false;
     const pts = [], sparks = [];
     const LIFE = 420;
+    // 色を増やした版（<html data-fx="spectrum">）では、光の線が8学科の色に移り変わる
+    const SPEC = document.documentElement.dataset.fx === 'spectrum'
+      ? ['#4A5CF0', '#00A0E9', '#22A33A', '#8040C0', '#F05A28', '#FF4C7D', '#F08C1E', '#1A9A8A'] : null;
+    let seq = 0;
     function size() {
       dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight;
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -105,13 +109,13 @@
     function add(x, y) {
       const last = pts[pts.length - 1];
       if (last && Math.hypot(x - last.x, y - last.y) < 3) return;
-      pts.push({ x, y, t: performance.now() }); kick();
+      pts.push({ x, y, t: performance.now(), c: SPEC ? SPEC[Math.floor(seq++ / 5) % 8] : null }); kick();
     }
     function burst(x, y) {
       const n = 14;
       for (let i = 0; i < n; i++) {
         const a = (i / n) * Math.PI * 2 + rnd(-.2, .2), v = rnd(2.5, 7);
-        sparks.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, t: performance.now(), red: i % 5 === 0 });
+        sparks.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, t: performance.now(), red: i % 5 === 0, c: SPEC ? SPEC[i % 8] : null });
       }
       kick();
     }
@@ -132,10 +136,11 @@
             if (k <= 0) continue;
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
             if (pass === 0) {
-              ctx.shadowBlur = 18; ctx.shadowColor = 'rgba(120,170,255,.9)';
-              ctx.strokeStyle = `rgba(140,185,255,${(k * .55).toFixed(3)})`; ctx.lineWidth = 2 + k * 7;
+              ctx.shadowBlur = 18; ctx.shadowColor = b.c || 'rgba(120,170,255,.9)';
+              ctx.globalAlpha = b.c ? k * .8 : 1;
+              ctx.strokeStyle = b.c || `rgba(140,185,255,${(k * .55).toFixed(3)})`; ctx.lineWidth = 2 + k * (b.c ? 9 : 7);
             } else {
-              ctx.shadowBlur = 0;
+              ctx.shadowBlur = 0; ctx.globalAlpha = 1;
               ctx.strokeStyle = `rgba(255,255,255,${(k * .95).toFixed(3)})`; ctx.lineWidth = .8 + k * 2.2;
             }
             ctx.stroke();
@@ -147,12 +152,13 @@
         if (k <= 0) { sparks.splice(i, 1); continue; }
         const x2 = s.x + s.vx * 3, y2 = s.y + s.vy * 3;
         ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(x2, y2);
-        ctx.shadowBlur = 12; ctx.shadowColor = s.red ? 'rgba(223,3,46,.9)' : 'rgba(140,185,255,.9)';
-        ctx.strokeStyle = s.red ? `rgba(255,60,90,${k})` : `rgba(255,255,255,${k})`;
+        ctx.shadowBlur = 12; ctx.shadowColor = s.c || (s.red ? 'rgba(223,3,46,.9)' : 'rgba(140,185,255,.9)');
+        ctx.globalAlpha = s.c ? k : 1;
+        ctx.strokeStyle = s.c || (s.red ? `rgba(255,60,90,${k})` : `rgba(255,255,255,${k})`);
         ctx.lineWidth = 1.6 * k + .4; ctx.stroke();
         s.x += s.vx; s.y += s.vy; s.vx *= .9; s.vy *= .9;
       }
-      ctx.shadowBlur = 0;
+      ctx.shadowBlur = 0; ctx.globalAlpha = 1;
       if (pts.length || sparks.length) requestAnimationFrame(draw);
       else { running = false; ctx.clearRect(0, 0, W, H); }
     }

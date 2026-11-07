@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ja" data-fx="spectrum">
+<head>
+<meta charset="utf-8">
+<base href="../">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>CID 中央情報大学校（作り直し見本・カラー版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=20261109b">
+<link rel="stylesheet" href="css/pages.css?v=20261109b">
+<link rel="stylesheet" href="color/color.css?v=20261109b">
+</head>
+<body data-page="top" class="is-color">
+
+<main>
+
+<!-- 最初の画面：見出しの文字の形に、学生の写真をくり抜く -->
+<section class="cinema" id="cinema" aria-label="未来をツクル人になる。">
+  <div class="cinema-pin" id="cinema-pin">
+    <div class="cinema-slides" id="cinema-slides"></div>
+    <div class="cinema-tint" id="cinema-tint" aria-hidden="true"></div>
+    <svg class="cinema-cover" id="cinema-cover" aria-hidden="true"></svg>
+    <h1 class="visually-hidden">未来をツクル人になる。</h1>
+    <div class="cinema-reveal" id="cinema-reveal"><p>高崎駅東口から徒歩3分。8つの学科で、今日もだれかが何かをつくっている。</p><small>情報・デザイン・電気通信の専門学校、中央情報大学校（CID）</small></div>
+    <p class="cinema-scroll" aria-hidden="true">スクロール</p>
+    <div class="cinema-foot">
+      <p class="hint"><i aria-hidden="true"></i><span>画面をなぞると、CIDの毎日がのぞけます</span></p>
+      <button class="btn-ghost" type="button" id="cinema-scatter">文字をばらす</button>
+    </div>
+  </div>
+</section>
+
+<!-- 8つの学科：人が主役の写真 -->
+<section class="reel" id="people" aria-labelledby="reel-h">
+  <div class="reel-pin">
+    <div class="wrap reel-h">
+      <h2 id="reel-h">8つの学科</h2>
+      <p>写真はどれも、CIDの授業や実習の様子です。迷ったら、<a href="departments.html">5つの質問で自分に合う学科を探せます</a>。</p>
+    </div>
+    <div class="track" id="track"></div>
+    <div class="track-nav"><button type="button" id="track-prev" aria-label="前の学科へ">‹</button><button type="button" id="track-next" aria-label="次の学科へ">›</button><div class="prog"><i id="track-prog"></i></div></div>
+  </div>
+</section>
+
+<!-- 学科ひと口体験 -->
+<section class="sec" id="lab">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>30秒で、学科をのぞいてみる。</h2>
+      <p>学科の名前だけでは、何をするのか分かりにくいものです。それぞれの学科で実際に扱う考え方を、小さな体験にしました。</p>
+      <p class="how"><span class="touch-dot" aria-hidden="true"></span>学科を選ぶと、体験が始まります。</p>
+    </div>
+    <div class="lab">
+      <div class="lab-tabs" role="tablist" aria-label="学科" id="lab-tabs"></div>
+      <div class="lab-stage" role="tabpanel" id="lab-stage" tabindex="0"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CIDを知る：各ページへの入口 -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>CIDのこと、もっと知る。</h2>
+      <p>どのページにも、触って確かめられる仕掛けを用意しています。</p>
+    </div>
+  </div>
+  <div class="entry-grid">
+    <a class="entry" href="learning.html"><img src="images/cid/img_features3.jpg" alt=""><span><b>学びのしくみ</b><small>自分で時間割を組んでみる</small></span></a>
+    <a class="entry" href="campus-life.html"><img src="images/cid/1_carousel1.jpg" alt=""><span><b>キャンパスライフ</b><small>1年を月ごとにめくる</small></span></a>
+    <a class="entry" href="career.html"><img src="images/cid/thum_support3.jpg" alt=""><span><b>就職・資格</b><small>なりたい仕事から逆算する</small></span></a>
+    <a class="entry" href="works.html"><img src="images/cid/image_07_a.jpg" alt=""><span><b>作品・産学官連携</b><small>先輩がつくったものを見る</small></span></a>
+    <a class="entry" href="admission.html"><img src="images/cid/img_features1.jpg" alt=""><span><b>学費・入試</b><small>学費と通学の補助を計算する</small></span></a>
+    <a class="entry" href="access.html"><img src="images/cid/img_env5.jpg" alt=""><span><b>アクセス</b><small>高崎駅東口から徒歩3分</small></span></a>
+  </div>
+</section>
+
+<!-- 保護者の方へ -->
+<section class="sec sec--light" id="parents">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>保護者の方へ</h2>
+      <p>楽しく学べることと同じくらい、資格と就職の結果、通いやすさを大切にしています。</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><div class="num"><span data-count="115">115</span><small>名</small></div><h3>基本情報技術者試験 合格</h3><p>2025年度の在校生。経済産業省の国家試験です。</p></div>
+      <div class="fact"><div class="num"><span data-count="100">100</span><small>%</small></div><h3>第二種電気工事士 合格率</h3><p>2025年度、電気通信学科。全国平均は43.5%です。</p></div>
+      <div class="fact"><div class="num">年<span data-count="12">12</span><small>万円</small></div><h3>一人暮らしの家賃支援</h3><p>自宅からの通学が難しい学生に、学園が返還不要で支援します。</p></div>
+    </div>
+    <ul class="link-list" style="margin-top:40px">
+      <li><a href="admission.html">学費・奨学金・通学の補助<small>学科を選ぶと卒業までの学費が分かります</small></a></li>
+      <li><a href="career.html">就職支援と主な就職先<small>1年次の10月から、担任と就職指導センターが個別に支えます</small></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- オープンキャンパス -->
+<section class="sec" id="oc">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>体験の続きは、学校で。</h2>
+      <p>ここで触ったことの本物を、先生や在校生と一緒にやってみられます。どの回も10時から12時30分まで、中央情報大学校で開きます。</p>
+    </div>
+    <div class="oc-list">
+      <article class="oc"><div class="oc-date">11.14<small>土</small></div><h3>オープンキャンパス 通常回</h3><p>混雑しにくい回なので、先生や在校生に個別で相談しやすい日です。</p><a class="btn-oc" href="open-campus.html#form">この日を予約する</a></article>
+      <article class="oc"><div class="oc-date">12.12<small>土</small></div><h3>Xmas FEST</h3><p>教室がクリスマス仕様になる回です。高校1・2年生にもおすすめです。</p><a class="btn-oc" href="open-campus.html#form">この日を予約する</a></article>
+      <article class="oc"><div class="oc-date">1.16<small>土</small></div><h3>オープンキャンパス 通常回</h3><p>好きなことを体験しながら、新学期からの進路を考える回です。</p><a class="btn-oc" href="open-campus.html#form">この日を予約する</a></article>
+    </div>
+  </div>
+</section>
+
+<!-- お知らせ -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>お知らせ</h2></div>
+    <div class="news-cards">
+      <a class="news-card" href="news.html"><figure class="cut"><img class="photo" src="images/cid/CID_EXPO_2027_1672x942-1.jpg" alt=""></figure><time datetime="2026-11-04">2026.11.04</time><h3>CID EXPO 2027 出展者募集</h3></a>
+      <a class="news-card" href="news.html"><figure class="cut"><img class="photo" src="images/cid/galaxy-and-universe.jpg" alt=""></figure><time datetime="2026-10-23">2026.10.23</time><h3>グンマから宇宙へ！Gunma Space Award</h3></a>
+      <a class="news-card" href="news.html"><figure class="cut"><img class="photo" src="images/cid/img014.jpg" alt=""></figure><time datetime="2026-10-16">2026.10.16</time><h3>デザインイラストコンテスト2026 募集開始</h3></a>
+    </div>
+    <p style="margin-top:28px"><a class="btn-ghost" href="news.html">お知らせをすべて見る</a></p>
+  </div>
+</section>
+
+</main>
+
+<script src="js/layout.js?v=20261109b"></script>
+<script src="js/depts-data.js?v=20261109b"></script>
+<script src="js/labs.js?v=20261109b"></script>
+<script src="js/cinema.js?v=20261109b"></script>
+<script src="color/color.js?v=20261109b"></script>
+</body>
+</html>

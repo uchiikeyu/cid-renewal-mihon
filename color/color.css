@@ -1,0 +1,90 @@
+/* カラー版（2026-11-09）：紺の地はそのまま、8学科の色を主役にする
+   色には意味を持たせる。8色の帯＝8学科、学科の写真や体験はその学科の色 */
+:root {
+  --c-ict: #4A5CF0; --c-is: #00A0E9; --c-agri: #22A33A; --c-game: #8040C0;
+  --c-cre: #F05A28; --c-pop: #FF4C7D; --c-video: #F08C1E; --c-elec: #1A9A8A;
+  /* 8学科の色を等分に並べた帯。このサイトの目印 */
+  --spectrum: linear-gradient(90deg, var(--c-ict) 0 12.5%, var(--c-is) 0 25%, var(--c-agri) 0 37.5%, var(--c-game) 0 50%, var(--c-cre) 0 62.5%, var(--c-pop) 0 75%, var(--c-video) 0 87.5%, var(--c-elec) 0);
+  --spectrum-soft: linear-gradient(110deg, var(--c-ict), var(--c-is), var(--c-agri), var(--c-game), var(--c-cre), var(--c-pop), var(--c-video), var(--c-elec), var(--c-ict));
+}
+
+/* ヘッダーの下と、フッターの上に8色の帯 */
+.is-color .site-head::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; background: var(--spectrum); opacity: 0; transition: opacity .4s; }
+.is-color .site-head.is-solid::after { opacity: 1; }
+.is-color .site-foot { border-top: 0; position: relative; }
+.is-color .site-foot::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; background: var(--spectrum); }
+
+/* 1. 最初の画面：文字の中の写真を8色で染める。色はゆっくり流れる */
+.cinema-tint {
+  position: absolute; inset: 0;
+  background: var(--spectrum-soft); background-size: 180% 100%;
+  mix-blend-mode: color; opacity: .9;
+  /* なぞった丸い窓の中だけは、本当の色の写真が見える */
+  -webkit-mask-image: radial-gradient(circle at var(--lx, -999px) var(--ly, -999px), transparent calc(var(--lr, 0px) * .55), #000 var(--lr, 0px));
+  mask-image: radial-gradient(circle at var(--lx, -999px) var(--ly, -999px), transparent calc(var(--lr, 0px) * .55), #000 var(--lr, 0px));
+  animation: tint-flow 24s linear infinite;
+}
+@keyframes tint-flow { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+@media (prefers-reduced-motion: reduce) { .cinema-tint { animation: none; } }
+/* 文字の下の8色の帯（最初の画面の下端） */
+.is-color .cinema-pin::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--spectrum); z-index: 3; }
+
+/* 2. 8つの学科：写真をその学科の色で染める。触ると本当の色に戻る */
+.is-color .reel { background-color: color-mix(in srgb, var(--reel-c, #081330) 26%, #081330); transition: background-color .8s ease; }
+.is-color .panel img { filter: grayscale(1) contrast(1.15) brightness(1.05); transition: filter .6s ease, transform .8s cubic-bezier(.2, .7, .2, 1); }
+.is-color .panel::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: var(--dc); mix-blend-mode: multiply; opacity: .92; transition: opacity .6s ease;
+}
+.is-color .panel::before { background: linear-gradient(to top, rgba(8, 19, 48, .85) 0%, rgba(8, 19, 48, .2) 45%, transparent 65%); z-index: 2; }
+.is-color .panel .c { z-index: 3; }
+.is-color .panel:hover::after, .is-color .panel:focus-visible::after, .is-color .panel.is-center::after { opacity: 0; }
+.is-color .panel:hover img, .is-color .panel:focus-visible img, .is-color .panel.is-center img { filter: none; }
+.is-color .panel .y { background: var(--dc); border-left: 0; }
+.is-color .panel .go { border-bottom-width: 3px; }
+.is-color .track-nav .prog { height: 4px; }
+.is-color .track-nav .prog i { background: var(--spectrum); background-size: calc(100vw - 2 * var(--gutter)) 100%; }
+
+/* 3. ミニ体験：選んだ学科の色が、場面全体にうっすら広がる */
+.is-color #lab { background-color: color-mix(in srgb, var(--lab-c, #081330) 16%, #081330); transition: background-color .8s ease; }
+.is-color #lab::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; background: var(--spectrum); }
+
+/* 4. CIDを知る：入口ごとに色を変える */
+.is-color .entry-grid { gap: 0; }
+.is-color .entry::after { background: linear-gradient(180deg, transparent 25%, color-mix(in srgb, var(--ec) 75%, #081330) 100%); transition: opacity .4s; }
+.is-color .entry img { opacity: .7; filter: saturate(1.1); }
+.is-color .entry span::before { content: ""; display: block; width: 40px; height: 4px; background: var(--ec); margin-bottom: 10px; box-shadow: 0 0 14px var(--ec); }
+.is-color .entry:nth-child(1) { --ec: var(--c-is); }
+.is-color .entry:nth-child(2) { --ec: var(--c-pop); }
+.is-color .entry:nth-child(3) { --ec: var(--c-agri); }
+.is-color .entry:nth-child(4) { --ec: var(--c-cre); }
+.is-color .entry:nth-child(5) { --ec: var(--c-game); }
+.is-color .entry:nth-child(6) { --ec: var(--c-elec); }
+
+/* 5. 保護者の方へ：数字はその結果を出した学科の色 */
+.is-color #parents .fact { border-top: 6px solid var(--fc); padding-top: 20px; }
+.is-color #parents .fact .num { color: var(--fc-text); }
+.is-color #parents .fact:nth-child(1) { --fc: var(--c-is); --fc-text: #0079B3; }
+.is-color #parents .fact:nth-child(2) { --fc: var(--c-elec); --fc-text: #12776A; }
+.is-color #parents .fact:nth-child(3) { --fc: var(--signal); --fc-text: var(--signal); }
+
+/* 6. オープンキャンパス：8色の帯を背景に大きく */
+.is-color #oc { background: var(--navy); overflow: hidden; }
+.is-color #oc::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: var(--spectrum-soft); background-size: 300% 100%; opacity: .22;
+  animation: tint-flow 30s linear infinite alternate;
+  mask-image: linear-gradient(180deg, #000, transparent 85%);
+}
+.is-color #oc .wrap { position: relative; }
+.is-color #oc .oc { border-top: 4px solid var(--oc-c); background: rgba(8, 19, 48, .7); }
+.is-color #oc .oc:nth-child(1) { --oc-c: var(--c-ict); }
+.is-color #oc .oc:nth-child(2) { --oc-c: var(--c-pop); }
+.is-color #oc .oc:nth-child(3) { --oc-c: var(--c-agri); }
+.is-color #oc .oc-date { color: #fff; text-shadow: 0 0 24px var(--oc-c); }
+
+/* 7. 見出しが現れるときの光の線を、8色に */
+.is-color .fx-wipe::after { background: var(--spectrum); width: 6px; box-shadow: 0 0 16px 4px rgba(255, 76, 125, .6), 0 0 36px 8px rgba(74, 92, 240, .45); }
+.is-color .entry-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 760px) { .is-color .entry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .is-color .entry-grid { grid-template-columns: minmax(0, 1fr); } }
