@@ -88,3 +88,68 @@
 .is-color .entry-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 760px) { .is-color .entry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 480px) { .is-color .entry-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ===== 下層ページ（2026-11-09 全ページに展開） ===== */
+/* ページごとの色。学科ページはその学科の色 */
+.is-color { --pc: var(--c-ict); }
+.is-color[data-dept] { --pc: var(--dept); }
+.is-color[data-page="about"], .is-color[data-page="instructor"] { --pc: var(--c-ict); }
+.is-color[data-page="learning"], .is-color[data-page="contact"], .is-color[data-page="intl"] { --pc: var(--c-is); }
+.is-color[data-page="career"], .is-color[data-page="recruitment"] { --pc: var(--c-agri); }
+.is-color[data-page="admission"] { --pc: var(--c-game); }
+.is-color[data-page="works"], .is-color[data-page="departments"] { --pc: var(--c-cre); }
+.is-color[data-page="campus-life"], .is-color[data-page="news"], .is-color[data-page="open-campus"] { --pc: var(--c-pop); }
+.is-color[data-page="graduate"], .is-color[data-page="working-adult"] { --pc: var(--c-video); }
+.is-color[data-page="access"], .is-color[data-page="recruiting"] { --pc: var(--c-elec); }
+
+/* ヘッダーの8色の帯は、下層ページでは常に出す */
+.is-color:not(.top-page) .site-head::after { opacity: 1; }
+
+/* 最初の画面：写真にページの色を重ね、下端に8色の帯 */
+.is-color .page-hero figure::after {
+  background:
+    linear-gradient(to top, rgba(8, 19, 48, .96) 0%, rgba(8, 19, 48, .62) 40%, rgba(8, 19, 48, .1) 75%, rgba(8, 19, 48, .35) 100%),
+    linear-gradient(135deg, color-mix(in srgb, var(--pc) 88%, transparent) 0%, color-mix(in srgb, var(--pc) 30%, transparent) 40%, transparent 70%);
+}
+.is-color .page-hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--spectrum); z-index: 3; }
+.is-color .page-hero--text { border-bottom: 0; background: radial-gradient(900px 420px at 88% -10%, color-mix(in srgb, var(--pc) 42%, transparent), transparent 70%), radial-gradient(600px 300px at 0% 120%, color-mix(in srgb, var(--pc) 18%, transparent), transparent 70%); }
+.is-color .page-hero .crumb a { text-decoration-color: var(--pc); }
+
+/* 入口の体験パネル：ページの色で光る */
+.is-color .hook {
+  border-color: transparent; border-top: 3px solid var(--pc);
+  background: radial-gradient(700px 320px at 100% 0%, color-mix(in srgb, var(--pc) 20%, transparent), transparent 70%), var(--navy-2);
+}
+.is-color .chip[aria-pressed="true"] { background-color: var(--pc); border-color: var(--pc); color: #fff; box-shadow: 0 0 16px -2px var(--pc); }
+.is-color .chip:hover { border-color: var(--pc); }
+.is-color .lab-stage .chip[aria-pressed="true"] { background-color: var(--lc); border-color: var(--lc); box-shadow: 0 0 16px -2px var(--lc); }
+.is-color .lab-stage .chip:hover { border-color: var(--lc); }
+.is-color .meter > i { background: var(--spectrum); background-size: 300px 100%; }
+
+/* 明るい面の上端に8色の帯 */
+.is-color .sec--light { position: relative; }
+.is-color .sec--light::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--spectrum); }
+
+/* カード・一覧：8学科の色を順に（--ac は color.js が割り当てる） */
+.is-color .link-list a { box-shadow: inset 4px 0 0 var(--ac, var(--pc)); padding-left: 18px; transition: box-shadow .3s; }
+.is-color .link-list a:hover { box-shadow: inset 10px 0 0 var(--ac, var(--pc)); color: inherit; }
+.is-color .steps li { box-shadow: inset 4px 0 0 var(--ac, var(--pc)); padding-left: 18px; }
+.is-color .news-card figure { border-bottom: 4px solid var(--ac, var(--pc)); }
+.is-color .news-card time { color: var(--ac, var(--sky)); }
+.is-color .work { border-top: 4px solid var(--ac, var(--pc)); }
+.is-color .project .work-cover { border-bottom: 4px solid var(--ac, var(--pc)); }
+.is-color .person figure { border-bottom: 4px solid var(--ac, var(--pc)); }
+.is-color .split-2 > div { border-top: 3px solid var(--ac, var(--pc)); padding-top: 16px; }
+.is-color .oc-list .oc { border-top: 4px solid var(--ac, var(--pc)); }
+.is-color .facts > .fact { border-top: 6px solid var(--ac, var(--pc)); padding-top: 18px; }
+
+/* 学科カード：写真を学科の色で染め、触ると本当の色に */
+.is-color .dept-card figure { position: relative; }
+.is-color .dept-card figure img { filter: grayscale(1) contrast(1.1); transition: filter .5s; }
+.is-color .dept-card figure::after { content: ""; position: absolute; inset: 0; background: var(--dept); mix-blend-mode: multiply; opacity: .9; transition: opacity .5s; }
+.is-color .dept-card:hover figure::after, .is-color .dept-card:focus-visible figure::after { opacity: 0; }
+.is-color .dept-card:hover figure img, .is-color .dept-card:focus-visible figure img { filter: none; }
+.is-color .dept-card .in { background: color-mix(in srgb, var(--dept) 14%, var(--navy-2)); }
+
+/* 仕事カード：表の面を学科の色に */
+.is-color .job .f { background: color-mix(in srgb, var(--dept) 30%, var(--navy-2)); }

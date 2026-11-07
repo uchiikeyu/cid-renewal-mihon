@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja" data-fx="spectrum">
+<head>
+<meta charset="utf-8">
+<script>window.CID_ROOT = '../';</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>アクセス｜CID 中央情報大学校（作り直し見本・カラー版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css?v=20261109c">
+<link rel="stylesheet" href="../css/pages.css?v=20261109c">
+<link rel="stylesheet" href="color.css?v=20261109c">
+<style>
+  .route { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin-top: 6px; }
+  .route .st { font-family: var(--f-head); font-weight: 900; font-size: var(--t-l); padding: 10px 16px; background: var(--navy); }
+  .route .st.goal { background: var(--signal); }
+  .route .ln { flex: 1 1 60px; min-width: 60px; height: 6px; background: var(--sky); position: relative; }
+  .route .ln small { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); white-space: nowrap; font-size: .75rem; color: var(--sky); }
+  .route .ln.walk { background: repeating-linear-gradient(90deg, var(--white) 0 8px, transparent 8px 14px); }
+  .spots { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .spot figure { margin: 0 0 8px; aspect-ratio: 4 / 3; --cut: 14px; }
+  .spot b { font-family: var(--f-head); }
+  .spot[aria-pressed="true"] figure { outline: 3px solid var(--signal); outline-offset: 2px; }
+  .spot { background: none; border: 0; padding: 0; text-align: left; cursor: pointer; color: var(--white); }
+</style>
+</head>
+<body class="is-color" data-page="access">
+<main>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div>
+      <p class="crumb"><a href="index.html">トップ</a>　／　アクセス</p>
+      <h1>高崎駅東口から、徒歩3分。</h1>
+      <p class="lead">新幹線と在来線が集まる高崎駅のすぐそば。大型ショッピングモールや複合施設がそろっていて、放課後も充実します。</p>
+      <p style="margin-top:18px">〒370-0841 群馬県高崎市栄町13-2<br>電話 027-324-8511（9:00〜17:00、土日祝を除く）</p>
+    </div>
+    <figure class="cut"><img class="photo" src="../images/cid/img_env5.jpg" alt="高崎駅東口周辺の建物"></figure>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="hook cut">
+      <div class="hook-head">
+        <h2><span class="touch-dot" aria-hidden="true"></span>自分の駅から、CIDまで</h2>
+        <p>最寄り駅に近いものを選ぶと、乗る路線が分かります。</p>
+      </div>
+      <div class="majors-tabs" role="group" aria-label="出発する駅" id="stations" style="margin-bottom:0"></div>
+      <div class="route" id="route" aria-live="polite"></div>
+      <p class="note" style="margin-top:18px">路線は今のサイトの「電車の主な所要時間」から。所要時間の数字は今のサイトでは画像の中にあり読み取れなかったため、要確認です。</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>放課後、寄れる場所</h2><p class="how"><span class="touch-dot" aria-hidden="true"></span>寄りたい場所を押してみてください。</p></div>
+    <div class="spots" id="spots"></div>
+    <p class="lab-result" id="spot-result" aria-live="polite" style="margin-top:20px"></p>
+  </div>
+</section>
+
+</main>
+<script src="../js/layout.js?v=20261109c"></script>
+<script>
+(function () {
+  const S = [['長岡駅', 'JR上越新幹線'], ['佐久平駅', 'JR北陸新幹線'], ['寄居駅', 'JR八高線'], ['熊谷駅', 'JR高崎線'], ['太田駅', '東武伊勢崎線〜JR両毛線'], ['桐生駅', 'JR両毛線'], ['沼田駅', 'JR上越線']];
+  const box = document.getElementById('stations'), route = document.getElementById('route');
+  box.innerHTML = S.map(([s], i) => `<button class="chip" type="button" aria-pressed="${i === 3}">${s}</button>`).join('');
+  const show = i => {
+    [...box.children].forEach((b, j) => b.setAttribute('aria-pressed', String(i === j)));
+    route.innerHTML = `<span class="st">${S[i][0]}</span><span class="ln"><small>${S[i][1]}</small></span><span class="st">高崎駅</span><span class="ln walk"><small>東口から徒歩3分</small></span><span class="st goal">CID</span>`;
+  };
+  [...box.children].forEach((b, i) => b.onclick = () => show(i));
+  show(3);
+
+  const P = [['img_env1.jpg', 'アニメイト高崎'], ['img_env2.jpg', '高島屋'], ['img_env3.jpg', '高崎オーパ'], ['img_env4.jpg', '高崎モントレー'], ['img_env5.jpg', 'ヤマダ電機 LABI1 高崎'],
+    ['img_env6.jpg', '高崎アリーナ'], ['img_env7.jpg', 'ビックカメラ 高崎東口店'], ['img_env8.jpg', 'Gメッセ群馬'], ['img_env9.jpg', '高崎芸術劇場']];
+  const sp = document.getElementById('spots'), picked = new Set();
+  sp.innerHTML = P.map(([f, n]) => `<button class="spot" type="button" aria-pressed="false"><figure class="cut"><img class="photo" src="../images/cid/${f}" alt="" loading="lazy"></figure><b>${n}</b></button>`).join('');
+  [...sp.children].forEach((b, i) => b.onclick = () => {
+    picked.has(i) ? picked.delete(i) : picked.add(i);
+    b.setAttribute('aria-pressed', String(picked.has(i)));
+    const names = [...picked].map(k => P[k][1]);
+    document.getElementById('spot-result').textContent = !names.length ? ''
+      : `今日の放課後：${names.join(' → ')}。` + (names.includes('Gメッセ群馬') ? 'Gメッセ群馬は、2月のCID EXPOの会場でもあります。' : '');
+  });
+  // 写真の説明：今のサイトの施設名の並びと写真の並びが同じと見なしている（要確認）
+})();
+</script>
+<script src="color.js?v=20261109c"></script>
+</body>
+</html>

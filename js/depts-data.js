@@ -1,7 +1,8 @@
 // 8学科の中身。文章・数字は今のサイトの各学科ページ（2026-11-06時点）をもとに短くまとめたもの
 // 写真は images/cid/ に取り込んだ今のサイトの写真
 window.CID = window.CID || {};
-const IMG = f => 'images/cid/' + f;
+// カラー版（color/）から読むときは window.CID_ROOT = '../' が入る
+const IMG = f => (window.CID_ROOT || '') + 'images/cid/' + f;
 
 CID.DEPTS = {
   'ict-design': {

@@ -89,6 +89,6 @@
 
   // 全ページ共通の動き
   const fx = document.createElement('script');
-  fx.src = 'js/fx.js?v=20261109b';
+  fx.src = (window.CID_ROOT || '') + 'js/fx.js?v=20261109c';
   document.body.appendChild(fx);
 })();

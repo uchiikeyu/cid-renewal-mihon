@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ja" data-fx="spectrum">
+<head>
+<meta charset="utf-8">
+<script>window.CID_ROOT = '../';</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>オープンキャンパス｜CID 中央情報大学校（作り直し見本・カラー版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css?v=20261109c">
+<link rel="stylesheet" href="../css/pages.css?v=20261109c">
+<link rel="stylesheet" href="color.css?v=20261109c">
+<style>
+  .plan { background: var(--white); color: var(--ink); padding: 24px; --cut: 18px; }
+  .plan h3 { font-size: var(--t-xl); }
+  .plan ol { margin: 14px 0 0; padding-left: 1.4em; }
+  .plan li { padding: 4px 0; }
+  .plan small { color: var(--ink-dim); }
+</style>
+</head>
+<body class="is-color" data-page="open-campus">
+<main>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div>
+      <p class="crumb"><a href="index.html">トップ</a>　／　オープンキャンパス</p>
+      <h1>体験の続きは、学校で。</h1>
+      <p class="lead">実際の授業と、学生たちの毎日をそのまま体感できます。自分に合う学科・専攻の相談や、入学に向けた進路の相談も受け付けています。どの回も10:00〜12:30（受付9:00〜）です。</p>
+    </div>
+    <figure class="cut"><img class="photo" src="../images/cid/Opencampus_standard.jpg" alt="オープンキャンパスの案内画像"></figure>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="hook cut">
+      <div class="hook-head">
+        <h2><span class="touch-dot" aria-hidden="true"></span>当日のプランを作ってみよう</h2>
+        <p>日にち・体験したい学科・聞きたいことを選ぶと、あなたの当日の予定ができます。そのまま申し込みに使えます。</p>
+      </div>
+      <div class="split-2">
+        <div style="display:grid;gap:18px">
+          <div><p class="note">日にち</p><div class="ctl-row" id="p-day"></div></div>
+          <div><p class="note">体験授業を受けたい学科</p><div class="ctl-row" id="p-dept"></div></div>
+          <div><p class="note">聞きたいこと（いくつでも）</p><div class="ctl-row" id="p-ask"></div></div>
+        </div>
+        <div class="plan cut" id="plan" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>当日のプログラム</h2></div>
+    <div class="projects">
+      <article class="project"><h3>学校説明</h3><p>資格やカリキュラム、教育の考え方など、学校の強みと特徴を説明します。</p></article>
+      <article class="project"><h3>体験授業</h3><p>希望の学科・専攻に分かれて、専門の講師の授業を体験できます。</p></article>
+      <article class="project"><h3>就職説明</h3><p>専門の部署による、手厚い就職サポートのしくみを説明します。</p></article>
+      <article class="project"><h3>入試・学費説明</h3><p>入試制度と卒業までの学費、奨学金やサポート制度を説明します。</p></article>
+      <article class="project"><h3>個別相談</h3><p>入試・学費の相談や、持ち込み作品へのアドバイスなど、希望の相談ができます。</p></article>
+      <article class="project"><h3>アクセス</h3><p>高崎駅から学校までの道順を紹介します。駅から近いので安心して来てください。</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--light" id="form">
+  <div class="wrap">
+    <div class="sec-head"><h2>申し込む</h2><p>見本のため、このフォームは送信されません。本番では今のサイトの申し込みフォームの項目をそのまま使います。</p></div>
+    <form class="form" id="oc-form" novalidate>
+      <label>希望日<span class="req">必須</span><select name="day" id="f-day" required></select></label>
+      <label>お名前<span class="req">必須</span><input name="name" autocomplete="name" required></label>
+      <label>フリガナ<span class="req">必須</span><input name="kana" required></label>
+      <label>メールアドレス<span class="req">必須</span><input name="mail" type="email" autocomplete="email" required></label>
+      <label>電話番号<input name="tel" type="tel" autocomplete="tel"></label>
+      <label>現在の状況<span class="req">必須</span><select name="status" required><option value="">選んでください</option><option>高校3年生</option><option>高校2年生</option><option>高校1年生</option><option>短大生</option><option>専門学生</option><option>大学生</option><option>社会人</option><option>留学生</option><option>その他</option></select></label>
+      <label>学校名／最終学歴<span class="req">必須</span><input name="school" required></label>
+      <label>希望する学科<span class="req">必須</span><select name="dept" id="f-dept" required></select></label>
+      <label>ご質問など<textarea name="memo" id="f-memo"></textarea></label>
+      <button class="btn-oc" type="submit">この内容で申し込む</button>
+      <p class="msg" id="f-msg" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+</main>
+<script src="../js/layout.js?v=20261109c"></script>
+<script src="../js/depts-data.js?v=20261109c"></script>
+<script>
+(function () {
+  const DAYS = [['2026.11.14', '11月14日（土）', '通常回'], ['2026.12.12', '12月12日（土）', 'Xmas FEST'], ['2027.01.16', '1月16日（土）', '通常回'], ['2027.02.13', '2月13日（土）', ''], ['2027.03.06', '3月6日（土）', ''], ['2027.03.20', '3月20日（土）', '']];
+  const ASK = ['勉強のこと', '学費のこと', 'アルバイトのこと', '通学・住まいのこと'];
+  const D = CID.DEPTS, O = CID.DEPT_ORDER;
+  const st = { day: 0, dept: 'information-system', ask: new Set(['学費のこと']) };
+  const pd = document.getElementById('p-day'), pde = document.getElementById('p-dept'), pa = document.getElementById('p-ask');
+  pd.innerHTML = DAYS.map(([, l, t], i) => `<button class="chip" type="button" data-i="${i}">${l}${t ? '　' + t : ''}</button>`).join('');
+  pde.innerHTML = O.map(k => `<button class="chip" type="button" data-k="${k}">${D[k].name}</button>`).join('') + '<button class="chip" type="button" data-k="">まだ決めていない</button>';
+  pa.innerHTML = ASK.map(a => `<button class="chip" type="button" data-a="${a}">${a}</button>`).join('');
+  pd.querySelectorAll('button').forEach(b => b.onclick = () => { st.day = +b.dataset.i; draw(); });
+  pde.querySelectorAll('button').forEach(b => b.onclick = () => { st.dept = b.dataset.k; draw(); });
+  pa.querySelectorAll('button').forEach(b => b.onclick = () => { st.ask.has(b.dataset.a) ? st.ask.delete(b.dataset.a) : st.ask.add(b.dataset.a); draw(); });
+
+  const fd = document.getElementById('f-day'), fde = document.getElementById('f-dept');
+  fd.innerHTML = DAYS.map(([v, l, t]) => `<option value="${v}">${l}${t ? ' ' + t : ''}</option>`).join('');
+  fde.innerHTML = '<option value="">選んでください</option>' + O.map(k => `<option value="${k}">${D[k].name}</option>`).join('') + '<option value="未定">未定</option>';
+
+  function draw() {
+    pd.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === st.day)));
+    pde.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === st.dept)));
+    pa.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(st.ask.has(b.dataset.a))));
+    const [, l, t] = DAYS[st.day];
+    const d = st.dept ? D[st.dept] : null;
+    document.getElementById('plan').innerHTML = `<small>あなたの当日プラン</small><h3>${l}${t ? '　' + t : ''}</h3>
+      <ol><li>受付（9:00〜）</li><li>学校説明</li><li>体験授業：${d ? d.name : '当日、先生と相談して決める'}</li>
+      <li>就職説明・入試と学費の説明</li><li>個別相談${st.ask.size ? '：' + [...st.ask].join('、') : ''}</li></ol>
+      <p style="margin-top:14px"><a class="btn-oc" href="#form" id="to-form">このプランで申し込む</a></p>
+      <small>プログラムの順番は目安です。</small>`;
+    document.getElementById('to-form').onclick = () => {
+      fd.value = DAYS[st.day][0];
+      fde.value = st.dept || '未定';
+      document.getElementById('f-memo').value = st.ask.size ? '聞きたいこと：' + [...st.ask].join('、') : '';
+    };
+  }
+  draw();
+
+  document.getElementById('oc-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target, miss = [...f.querySelectorAll('[required]')].filter(x => !x.value.trim());
+    const msg = document.getElementById('f-msg');
+    if (miss.length) {
+      msg.style.color = 'var(--signal)';
+      msg.textContent = `必須の項目が${miss.length}つ空いています：${miss.map(x => x.closest('label').firstChild.textContent.trim()).join('、')}`;
+      miss[0].focus();
+      return;
+    }
+    msg.style.color = 'var(--ink)';
+    msg.textContent = '見本のため送信していません。本番では、ここで申し込みが完了します。';
+  });
+})();
+</script>
+<script src="color.js?v=20261109c"></script>
+</body>
+</html>

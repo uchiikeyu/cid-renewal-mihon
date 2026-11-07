@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ja" data-fx="spectrum">
+<head>
+<meta charset="utf-8">
+<script>window.CID_ROOT = '../';</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>学費・サポート・入試｜CID 中央情報大学校（作り直し見本・カラー版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css?v=20261109c">
+<link rel="stylesheet" href="../css/pages.css?v=20261109c">
+<link rel="stylesheet" href="color.css?v=20261109c">
+</head>
+<body class="is-color" data-page="admission">
+<main>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div>
+      <p class="crumb"><a href="index.html">トップ</a>　／　学費・サポート・入試</p>
+      <h1>お金のこと、先に計算しておこう。</h1>
+      <p class="lead">学費は学科と年数で決まります。通学定期の補助、一人暮らしの家賃支援、国の修学支援制度など、使えるしくみもあわせて確かめられます。</p>
+    </div>
+    <figure class="cut"><img class="photo" src="../images/cid/img_features1.jpg" alt="職員に相談する学生"></figure>
+  </div>
+</section>
+
+<section class="sec" id="fee" style="padding-top:0">
+  <div class="wrap">
+    <div class="hook cut">
+      <div class="hook-head">
+        <h2><span class="touch-dot" aria-hidden="true"></span>学科を選ぶと、卒業までの学費が分かる</h2>
+        <p>募集要項（2027年度入学）の「校納金等について」の表から計算しています。</p>
+      </div>
+      <div class="calc">
+        <div style="display:grid;gap:14px;align-content:start">
+          <label>学科・専攻<select id="fee-sel"></select></label>
+          <label style="display:flex;gap:10px;align-items:center;color:var(--white)"><input type="checkbox" id="fee-class" checked style="width:20px;height:20px;accent-color:var(--signal)"> 学級費（年280,000円）も入れる</label>
+          <p class="note">学級費は、テキスト教材費・検定受験料・保険・行事費・実習用機材費などです。1年ごとに精算し、卒業年度末に精算金を返します。</p>
+        </div>
+        <div aria-live="polite">
+          <p class="note">卒業までの合計（目安）</p>
+          <p class="big" id="fee-total">―</p>
+          <div class="years" id="fee-years"></div>
+        </div>
+      </div>
+      <div class="lab-after"><p>入学金がかかるのは1年次だけです。<b>奨学金や教育ローン</b>の利用は相談できます。</p><div class="links"><a class="btn-oc" href="open-campus.html">学費の相談をする</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="support" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>通学と暮らしのサポート</h2></div>
+    <div class="hook cut" style="margin-top:0">
+      <div class="hook-head">
+        <h2><span class="touch-dot" aria-hidden="true"></span>通学定期の補助を計算する</h2>
+        <p>電車通学で、1か月の定期代が4万円を超える学生には、定期代の2割を学園が支援します（月1万円まで・返還不要）。</p>
+      </div>
+      <div class="calc">
+        <div style="display:grid;gap:14px;align-content:start">
+          <label>1か月の通学定期代（円）<input type="number" id="pass" min="0" step="100" value="50450"></label>
+          <input type="range" id="pass-range" min="0" max="80000" step="50" value="50450" aria-label="1か月の通学定期代">
+          <p class="note">例：北陸新幹線を使う場合、1か月の定期代50,450円 → 補助10,000円（今のサイトの例）。補助は3か月ごと（7・10・1・4月）に支給されます。</p>
+        </div>
+        <div aria-live="polite">
+          <p class="note">1か月の補助</p>
+          <p class="big" id="pass-help">―</p>
+          <p id="pass-note" style="color:var(--sky);margin-top:10px"></p>
+        </div>
+      </div>
+    </div>
+    <div class="facts" style="margin-top:40px;border-top-color:var(--sky)">
+      <div class="fact" style="border-bottom-color:rgba(143,180,232,.25)"><div class="num">年12<small>万円</small></div><h3>一人暮らし応援プログラム</h3><p style="color:var(--sky)">自宅から通うのが難しいと認められた学生に、家賃を返還不要で支援（3か月ごとに支給）。近くの安心できる物件も紹介します。</p></div>
+      <div class="fact" style="border-bottom-color:rgba(143,180,232,.25)"><div class="num">月5,000<small>円</small></div><h3>駐車場</h3><p style="color:var(--sky)">学校から徒歩10分以内の場所に3か所、約100台分あります。</p></div>
+      <div class="fact" style="border-bottom-color:rgba(143,180,232,.25)"><div class="num">2<small>割</small></div><h3>通学定期サポートプログラム</h3><p style="color:var(--sky)">定期代が月4万円を超える場合。上限は月1万円です。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--light">
+  <div class="wrap">
+    <div class="sec-head"><h2>国の支援制度・奨学金</h2></div>
+    <div class="split-2">
+      <div class="prose">
+        <h3 style="margin-top:0">高等教育の修学支援新制度</h3>
+        <p>中央カレッジグループは文部科学省「高等教育の修学支援新制度」の対象校です。世帯年収に応じて入学金・授業料が減免され、返還不要の給付型奨学金も受けられます。</p>
+        <h3>日本学生支援機構の奨学金</h3>
+        <p>日本学生支援機構の奨学金の貸与を受けられる学校です。</p>
+      </div>
+      <div class="prose">
+        <h3 style="margin-top:0">専門実践教育訓練給付金（社会人の方）</h3>
+        <p>雇用保険の被保険者だった期間が3年以上（初めての方は2年以上）など、一定の要件を満たす方は、訓練費用の50%（年間40万円まで）が国から給付されます。対象は情報システム学科 AI・プログラム専攻、クリエイティブデザイン学科 グラフィックデザイン専攻、電気通信学科 電気工事士専攻（2年制）です。</p>
+        <p><a href="working-adult.html">社会人の方へ</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--light" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>入試の種類</h2><p>出願はインターネットで行います。受験料は20,000円（別にシステム利用手数料660円）です。日程と出願資格は、各募集要項で確認してください。</p></div>
+    <ul class="link-list">
+      <li><a href="https://www.chuo.ac.jp/cid/wp-content/themes/cid/resource/pdf/admission/1_admission.pdf">入学案内（募集要項）<small>PDF・今のサイトにあるもの</small></a></li>
+      <li><a href="https://www.chuo.ac.jp/cid/wp-content/themes/cid/resource/pdf/admission/2_highschool.pdf">高校卒業（見込）者対象入試<small>PDF</small></a></li>
+      <li><a href="https://www.chuo.ac.jp/cid/wp-content/themes/cid/resource/pdf/admission/5_AO.pdf">AO入試<small>PDF</small></a></li>
+      <li><a href="https://www.chuo.ac.jp/cid/wp-content/themes/cid/resource/pdf/admission/3_kisotsu.pdf">大学・短大・専門学校卒業者対象入試<small>PDF</small></a></li>
+      <li><a href="https://www.chuo.ac.jp/cid/wp-content/themes/cid/resource/pdf/admission/4_shakaijin.pdf">社会人対象入試<small>PDF</small></a></li>
+      <li><a href="application.html">留学生対象入試<small>国際エンジニア学科など</small></a></li>
+    </ul>
+    <p class="note-block">入試日程の一覧表は、募集要項から書き写して載せる予定です（要確認）。</p>
+  </div>
+</section>
+
+<section class="sec sec--light" style="padding-top:0">
+  <div class="wrap">
+    <div class="tbl-scroll">
+      <table class="data-table" id="fee-table">
+        <caption>校納金の一覧（1年次・単位：円）</caption>
+        <thead><tr><th scope="col">学科・専攻</th><th scope="col">入学金</th><th scope="col">設備費</th><th scope="col">維持費</th><th scope="col">授業料</th><th scope="col">実習費</th><th scope="col">特別指導費</th><th scope="col">合計</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note-block">募集要項 p.16「9. 校納金等について」より。2年次以降は入学金を除いた金額です。高度ICTデザイン学科の3・4年次、ゲームクリエイター学科の3年次は別の金額です（3年次850,000円、4年次720,000円）。</p>
+  </div>
+</section>
+
+</main>
+<script src="../js/layout.js?v=20261109c"></script>
+<script>
+(function () {
+  // 募集要項 p.16 の表（1年次）：入学金・設備費・維持費・授業料・実習費・特別指導費
+  const F = [
+    ['ict1', '高度ICTデザイン学科（高度開発・サイバー・AI・XR・ゲームクリエイト・IoT・ロボット ドローン）', [160000, 270000, 100000, 600000, 30000, 30000], 4],
+    ['ict2', '高度ICTデザイン学科（UX・UIデザイン・Webディレクション・メディアアート）', [160000, 270000, 100000, 600000, 70000, 30000], 4],
+    ['is', '情報システム学科', [160000, 270000, 100000, 600000, 30000, 30000], 2],
+    ['agri', 'アグリ・フードテック学科', [160000, 270000, 100000, 600000, 70000, 30000], 2],
+    ['game', 'ゲームクリエイター学科', [160000, 270000, 100000, 600000, 70000, 30000], 3],
+    ['cd', 'クリエイティブデザイン学科', [160000, 270000, 100000, 600000, 70000, 30000], 2],
+    ['pop', 'ポップカルチャー学科', [160000, 270000, 100000, 600000, 70000, 30000], 2],
+    ['video', 'ネット動画クリエイター学科', [160000, 270000, 100000, 600000, 70000, 30000], 2],
+    ['el2', '電気通信学科 電気工事士専攻（2年制）', [160000, 270000, 100000, 600000, 110000, 30000], 2],
+    ['el1', '電気通信学科 電気工事士専攻（1年制）', [160000, 270000, 100000, 600000, 110000, 30000], 1],
+    ['shunin', '電気通信学科 電気主任技術者専攻（1年制）', [160000, 140000, 90000, 600000, 50000, 30000], 1]
+  ];
+  const yen = n => n.toLocaleString('ja-JP');
+  const sum = a => a.reduce((x, y) => x + y, 0);
+  document.querySelector('#fee-table tbody').innerHTML = F.map(([, n, a]) =>
+    `<tr><th scope="row">${n}</th>${a.map(v => `<td class="n">${yen(v)}</td>`).join('')}<td class="n"><b>${yen(sum(a))}</b></td></tr>`).join('') +
+    `<tr><th scope="row">電気通信学科 電気工学研究専攻（2年＋1年制）の3年目</th><td class="n">―</td><td class="n">140,000</td><td class="n">90,000</td><td class="n">600,000</td><td class="n">50,000</td><td class="n">30,000</td><td class="n"><b>910,000</b></td></tr>`;
+
+  const sel = document.getElementById('fee-sel');
+  sel.innerHTML = F.map(([k, n]) => `<option value="${k}">${n}</option>`).join('');
+  const chk = document.getElementById('fee-class');
+  function calc() {
+    const [, , a, Y] = F.find(f => f[0] === sel.value);
+    const y1 = sum(a), later = y1 - a[0];
+    const years = [y1];
+    for (let y = 2; y <= Y; y++) years.push(y === 3 ? 850000 : y === 4 ? 720000 : later);
+    const cls = chk.checked ? 280000 : 0;
+    const vals = years.map(v => v + cls);
+    const max = Math.max(...vals);
+    document.getElementById('fee-total').innerHTML = `${yen(sum(vals))}<small>円</small>`;
+    document.getElementById('fee-years').innerHTML = vals.map((v, i) =>
+      `<div><span>${i + 1}年次</span><i class="${i === 0 ? 'first' : ''}" style="width:${v / max * 100}%"></i><span>${yen(v)}円</span></div>`).join('');
+  }
+  sel.addEventListener('change', calc); chk.addEventListener('change', calc);
+  // 学科ページの「学費を見る」から来たとき
+  calc();
+
+  // 通学定期の補助
+  const pass = document.getElementById('pass'), range = document.getElementById('pass-range');
+  function help() {
+    const v = Math.max(0, +pass.value || 0);
+    // 今のサイトの例（49,540円 → 9,910円）に合わせて10円単位に丸める
+    const h = v > 40000 ? Math.min(10000, Math.round(v * 0.2 / 10) * 10) : 0;
+    document.getElementById('pass-help').innerHTML = `${yen(h)}<small>円</small>`;
+    document.getElementById('pass-note').textContent = v <= 40000
+      ? '定期代が月4万円以下のときは、この補助の対象外です。'
+      : `1年で${yen(h * 12)}円の補助になります${h === 10000 ? '（上限の月1万円）' : ''}。`;
+  }
+  pass.addEventListener('input', () => { range.value = pass.value; help(); });
+  range.addEventListener('input', () => { pass.value = range.value; help(); });
+  help();
+})();
+</script>
+<script src="color.js?v=20261109c"></script>
+</body>
+</html>
