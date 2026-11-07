@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>学びのしくみ｜CID 中央情報大学校（作り直し見本）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=20261109b">
+<link rel="stylesheet" href="css/pages.css?v=20261109b">
+</head>
+<body data-page="learning">
+<main>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div>
+      <p class="crumb"><a href="index.html">トップ</a>　／　学びのしくみ</p>
+      <h1>時間割を、自分で組む学校。</h1>
+      <p class="lead">CIDの授業は、3限目からが「科目選択制」が中心です。将来の目標に合わせて好きな科目を選べるので、同じ学科でも一人ひとり時間割が違います。必要な単位数を満たしていれば、空いた時間をインターンシップなど「社会人経験を積む時間」に使うこともできます。</p>
+    </div>
+    <figure class="cut"><img class="photo" src="images/cid/img_features3.jpg" alt="教室でパソコンに向かう学生たち"></figure>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="hook cut">
+      <div class="hook-head">
+        <h2><span class="touch-dot" aria-hidden="true"></span>3限目からの時間割を組んでみよう</h2>
+        <p>点線のマスを押して科目を選びます。「空ける」を選ぶと、その時間をインターンシップやアルバイトに使えます。1・2限は情報システム学科1年次の例です。</p>
+      </div>
+      <div class="tt-build">
+        <div class="tt-grid" id="tt" aria-label="時間割"></div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <p class="note" id="tt-target">マスを選んでください</p>
+          <div class="tt-pick" id="tt-pick" role="group" aria-label="入れる科目"></div>
+          <div class="meter" aria-hidden="true"><i id="tt-bar"></i></div>
+          <p class="lab-result" id="tt-result" aria-live="polite"></p>
+          <p class="note">科目名は今のサイトに載っている選択推奨科目から選んでいます。実際に選べる科目と、卒業に必要な単位数は学科ごとに違います。</p>
+        </div>
+      </div>
+      <div class="lab-after"><p>学びを深める、広げる、社会に出て試す。<b>3つの時間の使い方</b>を、自分で決められます。</p><div class="links"><a class="btn-oc" href="open-campus.html">オープンキャンパスで相談する</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>CIDの6つの強み</h2><p>今のサイトの「CIDの特長」を、短い言葉にまとめ直しました。</p></div>
+    <div class="projects">
+      <article class="project"><div class="work-cover cut"><img class="photo" src="images/cid/img_features2.jpg" alt=""></div><h3>カリキュラム</h3><p>情報・デザイン・電気通信をかけ合わせて学び、社会の新しいニーズにすぐ対応できる力をつけます。</p></article>
+      <article class="project"><div class="work-cover cut"><img class="photo" src="images/cid/img_features3.jpg" alt=""></div><h3>科目選択制</h3><p>必修科目のほかに、将来の目標に合わせて好きな科目を自由に選べます。同じ学科でも、得意分野は人それぞれです。</p></article>
+      <article class="project"><div class="work-cover cut"><img class="photo" src="images/cid/img_features4.jpg" alt=""></div><h3>学びながら働く、働きながら学ぶ</h3><p>空いた時間をインターンシップなどに使い、在学中から社会人としての経験を積めます。</p></article>
+      <article class="project"><div class="work-cover cut"><img class="photo" src="images/cid/img_seminar.jpg" alt=""></div><h3>ゼミ制度</h3><p>同じテーマに関心のある学生が集まり、考え、教え合いながら学ぶ授業です。</p></article>
+      <article class="project"><div class="work-cover cut"><img class="photo" src="images/cid/img_features6.jpg" alt=""></div><h3>多彩な講師陣</h3><p>現場で活躍してきたプロが、業界が求める本物の技術と、社会で信頼される人間力の両方を教えます。</p></article>
+      <article class="project"><div class="work-cover cut"><img class="photo" src="images/cid/img_features1.jpg" alt=""></div><h3>就職のサポート</h3><p>就職指導センターと担任が組んで、1年次の秋から一人ひとりの就職活動を支えます。</p></article>
+    </div>
+    <ul class="link-list" style="margin-top:48px">
+      <li><a href="instructor.html">講師紹介<small>どんな先生が教えているか</small></a></li>
+      <li><a href="works.html">産学官連携プロジェクト<small>企業や地域と組んだ学び</small></a></li>
+      <li><a href="career.html">就職・資格<small>就職指導センターの支え方</small></a></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+<script src="js/layout.js?v=20261109b"></script>
+<script>
+(function () {
+  const DAYS = ['月', '火', '水', '木', '金'];
+  const REQ = [ // 1・2限（情報システム学科1年次の例）
+    ['Java実習基礎', 'アプリケーション開発', 'データベース実習', '', 'データベース実習'],
+    ['Java実習基礎', 'アプリケーション開発', 'データベース実習', 'ICTスキル実践', 'IS系ゼミ']];
+  const PICKS = ['Python実習', 'C#実習', 'Linux実習', '組み込み実習', 'セキュリティ実習', 'ドローン実習', '生成AI入門', 'MOS Excel', 'Photoshop', '映像編集'];
+  const FREE = '空ける';
+  const sel = {}; // 'r-c' → 科目名
+  let target = null;
+  const tt = document.getElementById('tt'), pick = document.getElementById('tt-pick');
+  function draw() {
+    let h = '<div class="h"></div>' + DAYS.map(d => `<div class="h">${d}</div>`).join('');
+    for (let r = 0; r < 4; r++) {
+      h += `<div class="h">${r + 1}限</div>`;
+      for (let c = 0; c < 5; c++) {
+        if (r < 2) { h += `<div class="${REQ[r][c] ? 'req' : ''}">${REQ[r][c] || '―'}</div>`; continue; }
+        const k = r + '-' + c, v = sel[k];
+        const cls = v === FREE ? 'free' : v ? 'pick' : 'slot';
+        h += v ? `<button type="button" class="slot ${cls}${target === k ? ' is-on' : ''}" data-k="${k}" aria-label="${DAYS[c]}曜${r + 1}限：${v}">${v === FREE ? 'インターン・アルバイト' : v}</button>`
+          : `<button type="button" class="slot${target === k ? ' is-on' : ''}" data-k="${k}" aria-label="${DAYS[c]}曜${r + 1}限：未選択">選ぶ</button>`;
+      }
+    }
+    tt.innerHTML = h;
+    tt.querySelectorAll('button').forEach(b => b.onclick = () => {
+      target = b.dataset.k; draw();
+      const [r, c] = target.split('-').map(Number);
+      document.getElementById('tt-target').textContent = `${DAYS[c]}曜${r + 1}限に入れる科目`;
+      pick.querySelector('button').focus();
+    });
+    const vals = Object.values(sel), free = vals.filter(v => v === FREE).length, n = vals.length - free;
+    document.getElementById('tt-bar').style.width = (vals.length / 10 * 100) + '%';
+    document.getElementById('tt-result').textContent = !vals.length ? ''
+      : `選んだ科目 ${n}コマ、空けた時間 ${free}コマ（週${(free * 1.5).toFixed(1).replace('.0', '')}時間）。` +
+        (free >= 3 ? '空いた時間で、インターンシップに挑戦できそうです。' : n >= 6 ? 'しっかり学びを広げる時間割です。' : '');
+  }
+  pick.innerHTML = PICKS.concat(FREE).map(p => `<button type="button" class="chip${p === FREE ? ' chip--go' : ''}">${p === FREE ? '空ける（インターン・アルバイト）' : p}</button>`).join('');
+  pick.querySelectorAll('button').forEach((b, i) => b.onclick = () => {
+    if (!target) { document.getElementById('tt-target').textContent = '先に、左の点線のマスを押してください'; return; }
+    sel[target] = PICKS.concat(FREE)[i];
+    // 次の空きマスへ自動で進む
+    const order = []; for (let r = 2; r < 4; r++) for (let c = 0; c < 5; c++) order.push(r + '-' + c);
+    target = order.find(k => !sel[k]) || null;
+    draw();
+    document.getElementById('tt-target').textContent = target ? `${DAYS[+target.split('-')[1]]}曜${+target.split('-')[0] + 1}限に入れる科目` : 'すべてのマスが埋まりました。マスを押すと入れ替えられます';
+  });
+  target = '2-0';
+  draw();
+  document.getElementById('tt-target').textContent = '月曜3限に入れる科目';
+})();
+</script>
+</body>
+</html>

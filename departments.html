@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>学科を探す｜CID 中央情報大学校（作り直し見本）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=20261109b">
+<link rel="stylesheet" href="css/pages.css?v=20261109b">
+</head>
+<body data-page="departments">
+<main>
+
+<section class="page-hero page-hero--text">
+  <div class="wrap">
+    <div>
+      <p class="crumb"><a href="index.html">トップ</a>　／　学科</p>
+      <h1>自分に合う学科を探す</h1>
+      <p class="lead">CIDには8つの学科があります。まだ何がしたいか決まっていなくても大丈夫。5つの質問に答えると、近い学科が分かります。</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="hook cut" id="quiz" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>8つの学科</h2><p>年数・専攻・目指せる仕事の一覧です。</p></div>
+    <div class="dept-grid" id="dept-grid"></div>
+  </div>
+</section>
+
+<section class="sec sec--light">
+  <div class="wrap">
+    <div class="sec-head"><h2>学科をくらべる</h2><p>2年制・3年制で学んだあと、4年制の高度ICTデザイン学科に編入して学びを深めることもできます。</p></div>
+    <div class="tbl-scroll">
+      <table class="data-table" id="compare">
+        <thead><tr><th scope="col">学科</th><th scope="col">年数</th><th scope="col">専攻</th><th scope="col">目指せる仕事（例）</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p style="margin-top:32px"><a href="international-engineer.html">留学生向けの学科（国際エンジニア学科・日本語学科など）はこちら</a></p>
+  </div>
+</section>
+
+</main>
+<script src="js/layout.js?v=20261109b"></script>
+<script src="js/depts-data.js?v=20261109b"></script>
+<script>
+(function () {
+  const D = CID.DEPTS, O = CID.DEPT_ORDER;
+  const card = k => { const d = D[k]; return `<a class="dept-card cut" href="${k}.html" style="--dept:${d.color}"><figure><img class="photo" src="${CID.img(d.photos[0])}" alt="" loading="lazy"></figure><div class="in"><span class="yrs">${d.years}</span><h3>${d.name}</h3><p>${d.catch}</p></div></a>`; };
+  document.getElementById('dept-grid').innerHTML = O.map(card).join('');
+  document.querySelector('#compare tbody').innerHTML = O.map(k => {
+    const d = D[k];
+    return `<tr><th scope="row"><a href="${k}.html">${d.name}</a></th><td>${d.years}</td><td>${d.majors.map(m => m[0]).join('、')}</td><td>${d.jobs.slice(0, 3).map(j => j[0]).join('、')}</td></tr>`;
+  }).join('');
+
+  // 5つの質問：選んだ答えごとに学科へ点数を足す
+  const Q = [
+    ['休みの日にしていることに近いのは？', [
+      ['ゲームをする。自分でも作ってみたい', { 'game-creator': 2, 'ict-design': 1 }],
+      ['絵を描く・アニメやマンガを見る', { 'pop-culture': 2, 'creative-design': 1 }],
+      ['動画を見る・撮る・編集する', { 'internet-video-creator': 2 }],
+      ['機械や家電をいじる・組み立てる', { 'electro-communications': 2, 'ict-design': 1 }],
+      ['料理をする・植物を育てる', { 'agri-foodtech': 2 }]]],
+    ['「すごい！」と言われたいのは、どんなとき？', [
+      ['自分で作ったものが動いたとき', { 'information-system': 2, 'ict-design': 1, 'game-creator': 1 }],
+      ['見た目をかっこよく仕上げたとき', { 'creative-design': 2, 'pop-culture': 1 }],
+      ['たくさんの人に見てもらえたとき', { 'internet-video-creator': 2, 'creative-design': 1 }],
+      ['難しい資格に受かったとき', { 'electro-communications': 2, 'information-system': 1 }]]],
+    ['グループで何かを作るとき、やりたい役は？', [
+      ['しくみを考えて組み立てる', { 'information-system': 2, 'ict-design': 1 }],
+      ['アイデアを出して、みんなをまとめる', { 'game-creator': 1, 'internet-video-creator': 1, 'agri-foodtech': 1 }],
+      ['黙々と作り込む', { 'pop-culture': 2, 'game-creator': 1 }],
+      ['現場で体を動かす', { 'electro-communications': 2, 'agri-foodtech': 1 }]]],
+    ['つい見てしまうニュースは？', [
+      ['AI・サイバー攻撃・新しいガジェット', { 'ict-design': 2, 'information-system': 2 }],
+      ['新作ゲーム・アニメの発表', { 'game-creator': 2, 'pop-culture': 1 }],
+      ['SNSのトレンド・話題の広告', { 'internet-video-creator': 2, 'creative-design': 1 }],
+      ['食べもの・農業・環境', { 'agri-foodtech': 2 }],
+      ['電気・エネルギー・インフラ', { 'electro-communications': 2 }]]],
+    ['学校で学ぶ年数は、どれくらいがいい？', [
+      ['早く働きたい（1〜2年）', { 'information-system': 1, 'creative-design': 1, 'pop-culture': 1, 'internet-video-creator': 1, 'electro-communications': 1, 'agri-foodtech': 1 }],
+      ['じっくり3〜4年かけたい', { 'ict-design': 2, 'game-creator': 2 }],
+      ['まだ決めていない', {}]]]
+  ];
+  const box = document.getElementById('quiz');
+  let step = 0, score = {};
+  function render() {
+    if (step < Q.length) {
+      const [q, opts] = Q[step];
+      box.innerHTML = `<div class="quiz-step" aria-hidden="true">${Q.map((_, i) => `<i class="${i <= step ? 'on' : ''}"></i>`).join('')}</div>
+        <p class="note">質問 ${step + 1} / ${Q.length}</p>
+        <p class="quiz-q"><span class="touch-dot" aria-hidden="true"></span>　${q}</p>
+        <div class="quiz-opts">${opts.map((o, i) => `<button class="quiz-opt" type="button" data-i="${i}">${o[0]}</button>`).join('')}</div>`;
+      box.querySelectorAll('.quiz-opt').forEach(b => b.onclick = () => {
+        const add = opts[+b.dataset.i][1];
+        for (const k in add) score[k] = (score[k] || 0) + add[k];
+        step++; render();
+        box.querySelector('button')?.focus();
+      });
+      return;
+    }
+    const rank = O.map(k => [k, score[k] || 0]).sort((a, b) => b[1] - a[1]);
+    const [top, second] = [rank[0][0], rank[1][0]];
+    const d = D[top], s = D[second];
+    box.style.setProperty('--dept', d.color);
+    box.innerHTML = `<p class="note">あなたに近い学科は</p>
+      <div class="quiz-result"><figure class="cut"><img class="photo" src="${CID.img(d.photos[0])}" alt=""></figure>
+      <div><h3>${d.name}</h3><p>${d.catch}</p>
+      <div class="ctl-row" style="margin-top:16px"><a class="btn-oc" href="${top}.html">${d.name}を見る</a><button class="btn-ghost" type="button" data-again>もう一度やる</button></div></div></div>
+      <p style="color:var(--sky);font-size:var(--t-s)">2番目に近いのは <a href="${second}.html">${s.name}</a> です。結果はあくまで目安です。迷ったら、オープンキャンパスで先生や在校生に相談できます。</p>`;
+    box.querySelector('[data-again]').onclick = () => { step = 0; score = {}; box.style.removeProperty('--dept'); render(); box.querySelector('button').focus(); };
+  }
+  render();
+})();
+</script>
+</body>
+</html>

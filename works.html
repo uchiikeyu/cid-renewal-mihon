@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>作品・産学官連携｜CID 中央情報大学校（作り直し見本）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=20261109b">
+<link rel="stylesheet" href="css/pages.css?v=20261109b">
+</head>
+<body data-page="works">
+<main>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div>
+      <p class="crumb"><a href="index.html">トップ</a>　／　作品・産学官連携</p>
+      <h1>先輩が、本当につくったもの。</h1>
+      <p class="lead">企業や地域、市町村と組んで、システム開発やデザイン提案、新商品の開発に取り組んでいます。実際のビジネスに関わることで、企画力・提案力・実践力が育ちます。</p>
+    </div>
+    <figure class="cut"><img class="photo" src="images/cid/IMG_7473-22.jpg" alt="文真堂書店とのコラボ企画の発表"></figure>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="hook cut" style="overflow:hidden">
+      <div class="hook-head">
+        <h2><span class="touch-dot" aria-hidden="true"></span>作品の棚を、横にめくってみよう</h2>
+        <p>学科で絞り込めます。作品を押すと説明が開きます。</p>
+      </div>
+      <div class="majors-tabs" role="group" aria-label="学科で絞り込む" id="filter" style="margin-bottom:0"></div>
+      <div class="gallery" id="gallery" style="margin:0;padding-left:0;padding-right:0"></div>
+    </div>
+  </div>
+  <dialog class="work-dlg" id="work-dlg">
+    <div class="work-cover"><img class="photo" id="dlg-img" alt=""></div>
+    <div class="in">
+      <p class="note" id="dlg-dept"></p>
+      <h3 id="dlg-title"></h3>
+      <p id="dlg-text"></p>
+      <button class="btn-ghost close" type="button" id="dlg-close">閉じる</button>
+    </div>
+  </dialog>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>産学官連携プロジェクトの実績</h2><p>今のサイトの「プロジェクト実績」から。</p></div>
+    <div class="news-cards">
+      <article class="news-card"><figure class="cut"><img class="photo" src="images/cid/Vocational-School-signing-ceremony-6-1.jpg" alt=""></figure><time>2026.02.04</time><h3>有坂中央学園 × LunaTone</h3></article>
+      <article class="news-card"><figure class="cut"><img class="photo" src="images/cid/slider_polygon.jpg" alt=""></figure><time>2025.08.19</time><h3>学生制作のバーチャルアイドル「ポリゴンスター」</h3></article>
+      <article class="news-card"><figure class="cut"><img class="photo" src="images/cid/IMG_7473-22.jpg" alt=""></figure><time>2025.04.04</time><h3>文真堂書店とのコラボで企画提案</h3></article>
+      <article class="news-card"><figure class="cut"><img class="photo" src="images/cid/aidol.jpg" alt=""></figure><time>2024.11.09</time><h3>バーチャルアイドル デビュープロジェクト</h3></article>
+      <article class="news-card"><figure class="cut"><img class="photo" src="images/cid/img186.jpg" alt=""></figure><time>2023.11.29</time><h3>NEXUSグループ × ブルーライトカットメガネ</h3></article>
+      <article class="news-card"><figure class="cut"><img class="photo" src="images/cid/img188.jpg" alt=""></figure><time>2022.08.17</time><h3>グンマeスポーツアワードのロゴマークに採用</h3></article>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band"><div class="wrap"><div><h2>CID EXPO 2027</h2><p>2027年2月27日（土）10:00〜17:00　Gメッセ群馬　入場無料。2年間の成果を一般公開します。</p></div><a class="btn-white" href="news.html">お知らせを見る</a></div></section>
+
+</main>
+<script src="js/layout.js?v=20261109b"></script>
+<script src="js/depts-data.js?v=20261109b"></script>
+<script>
+(function () {
+  const D = CID.DEPTS, O = CID.DEPT_ORDER;
+  const works = [];
+  O.forEach(k => (D[k].projects || []).forEach(([f, t, x]) => works.push({ k, f, t, x })));
+  works.push({ k: 'pop-culture', f: 'slider_polygon.jpg', t: 'バーチャルアイドル「ポリゴンスター」', x: '学生が制作したバーチャルアイドル。ネット動画・高度ICT・クリエイティブデザイン・ポップカルチャーの4学科が関わりました。' });
+  works.push({ k: 'creative-design', f: 'img188.jpg', t: 'グンマeスポーツアワードのロゴマーク', x: 'クリエイティブデザイン学科の学生のデザインが、ロゴマークに採用されました。' });
+  const g = document.getElementById('gallery'), filter = document.getElementById('filter');
+  const ks = ['all'].concat(O.filter(k => works.some(w => w.k === k)));
+  filter.innerHTML = ks.map((k, i) => `<button class="chip" type="button" aria-pressed="${i === 0}" data-k="${k}">${k === 'all' ? 'すべて' : D[k].name}</button>`).join('');
+  function draw(k) {
+    g.innerHTML = works.filter(w => k === 'all' || w.k === k).map(w =>
+      `<button class="work cut" type="button" data-i="${works.indexOf(w)}" style="--dept:${D[w.k].color}"><div class="work-cover"><img class="photo" src="${CID.img(w.f)}" alt="" loading="lazy"></div><div class="work-body" style="border-top:4px solid var(--dept)"><h3>${w.t}</h3><small>${D[w.k].name}</small></div></button>`).join('');
+    g.scrollLeft = 0;
+    g.querySelectorAll('.work').forEach(b => b.onclick = () => open(works[b.dataset.i]));
+  }
+  filter.querySelectorAll('button').forEach(b => b.onclick = () => {
+    filter.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    draw(b.dataset.k);
+  });
+  draw('all');
+
+  const dlg = document.getElementById('work-dlg');
+  function open(w) {
+    document.getElementById('dlg-img').src = CID.img(w.f);
+    document.getElementById('dlg-dept').textContent = D[w.k].name;
+    document.getElementById('dlg-title').textContent = w.t;
+    document.getElementById('dlg-text').textContent = w.x;
+    dlg.showModal();
+  }
+  document.getElementById('dlg-close').onclick = () => dlg.close();
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+
+  // マウスでつかんで横に動かす
+  let sx = 0, sl = 0, down = false, moved = false;
+  g.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = g.scrollLeft; });
+  addEventListener('pointermove', e => {
+    if (!down) return;
+    const dx = e.clientX - sx;
+    if (Math.abs(dx) > 5) { moved = true; g.classList.add('is-drag'); }
+    if (moved) g.scrollLeft = sl - dx;
+  });
+  addEventListener('pointerup', () => { if (!down) return; down = false; setTimeout(() => g.classList.remove('is-drag'), 0); });
+})();
+</script>
+</body>
+</html>
