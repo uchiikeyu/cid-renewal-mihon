@@ -374,3 +374,19 @@ h1, h2, h3, .lead strong { word-break: auto-phrase; text-wrap: balance; }
 }
 .fx-wipe.is-in::after { animation: fx-beam 1.1s cubic-bezier(.7, 0, .2, 1) forwards; }
 @keyframes fx-beam { 0% { left: 0; opacity: 1; } 85% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+
+/* 入口（トップ・学科ページに置く） */
+.cam-entry {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 32px; align-items: center;
+  padding: clamp(22px, 4vw, 40px); text-decoration: none;
+  background:
+    radial-gradient(600px 240px at 100% 0%, rgba(74, 92, 240, .35), transparent 70%),
+    radial-gradient(500px 240px at 0% 100%, rgba(255, 76, 125, .22), transparent 70%),
+    #040A1C;
+  border: 1px solid rgba(255, 255, 255, .14);
+  position: relative; overflow: hidden;
+}
+.cam-entry b { display: block; font-family: var(--f-head); font-weight: 900; font-size: clamp(1.4rem, 1rem + 1.8vw, 2.4rem); line-height: 1.3; }
+.cam-entry small { display: block; margin-top: 8px; color: var(--sky); font-size: var(--t-s); }
+.cam-entry .btn-oc { pointer-events: none; }
+@media (max-width: 640px) { .cam-entry { grid-template-columns: minmax(0, 1fr); } }

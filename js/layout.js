@@ -19,7 +19,7 @@
     ['internet-video-creator', 'ネット動画クリエイター学科'], ['electro-communications', '電気通信学科']
   ];
   const SUB = [
-    ['news.html', 'お知らせ'], ['instructor.html', '講師紹介'], ['about.html', '学校概要・情報公開'],
+    ['camera.html', 'カメラ体験'], ['news.html', 'お知らせ'], ['instructor.html', '講師紹介'], ['about.html', '学校概要・情報公開'],
     ['contact.html', '資料請求・お問い合わせ']
   ];
   const VISIT = [
@@ -89,6 +89,6 @@
 
   // 全ページ共通の動き
   const fx = document.createElement('script');
-  fx.src = (window.CID_ROOT || '') + 'js/fx.js?v=20261109c';
+  fx.src = (window.CID_ROOT || '') + 'js/fx.js?v=20261112b';
   document.body.appendChild(fx);
 })();

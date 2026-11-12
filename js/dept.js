@@ -96,6 +96,9 @@
       <div><blockquote>${v.quote}</blockquote><p>${v.text}</p><cite>${d.name} ${v.who}<br>※ 今のサイトの卒業生メッセージを短くまとめたもの。名前・写真の掲載は許可を確認します。</cite></div></div></div></section>`;
   }
 
+  // カメラ体験への入口（学科に関係する体験を案内する）
+  const CAM = { 'ict-design': '手でドローンを飛ばす', 'game-creator': 'なりきり光の人型', 'creative-design': '光の筆で空中に描く', 'pop-culture': 'なりきり光の人型', 'internet-video-creator': 'なりきり光の人型' };
+  html += `<section class="sec" style="padding-top:0"><div class="wrap"><a class="cam-entry" href="camera.html"><span><b>${CAM[slug] ? `カメラ体験「${CAM[slug]}」` : 'カメラ体験「体で答える学科診断」'}</b><small>カメラの前に立って、体の動きで操作します。映像は保存も送信もしません。</small></span><span class="btn-oc">カメラ体験へ</span></a></div></section>`;
   html += `<section class="cta-band"><div class="wrap"><div><h2>本物の実習を、体験授業で。</h2><p>オープンキャンパスでは、${d.name}の授業を先生や在校生と一緒に体験できます。</p></div>
     <a class="btn-white" href="open-campus.html">日程を見て予約する</a></div></section>
     <section class="sec"><div class="wrap"><div class="sec-head"><h2>ほかの学科も見る</h2></div>

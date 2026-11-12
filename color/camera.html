@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja" data-fx="spectrum">
+<head>
+<meta charset="utf-8">
+<script>window.CID_ROOT = '../';</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>カメラ体験｜CID 中央情報大学校（作り直し見本・カラー版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css?v=20261112b">
+<link rel="stylesheet" href="../css/pages.css?v=20261112b">
+<link rel="stylesheet" href="color.css?v=20261112b">
+<link rel="stylesheet" href="../css/camera.css?v=20261112b">
+</head>
+<body class="is-color" data-page="camera">
+<main>
+
+<section class="page-hero page-hero--text cam-head">
+  <div class="wrap">
+    <div>
+      <p class="crumb"><a href="index.html">トップ</a>　／　カメラ体験</p>
+      <h1>体ごと、操作する。</h1>
+      <p class="lead">カメラの前に立つと、あなたの体の動きをその場で読み取ります。手をかざして選び、体を動かして遊ぶ、5つの体験です。</p>
+    </div>
+  </div>
+</section>
+
+<section class="cam-wrap" aria-label="カメラ体験">
+  <div class="cam" id="cam">
+    <video class="cam-video" id="cam-video" playsinline muted></video>
+    <canvas class="cam-canvas" id="cam-canvas" aria-hidden="true"></canvas>
+
+    <!-- 画面の飾り：四隅の枠と、処理の表示 -->
+    <div class="cam-hud" aria-hidden="true">
+      <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
+      <p class="cam-stat" id="cam-stat"></p>
+    </div>
+    <p class="cam-privacy">映像は保存も送信もしません。この端末の中だけで処理しています。</p>
+    <p class="cam-say" id="cam-say" aria-live="polite"></p>
+
+    <!-- 始める前 -->
+    <div class="cam-panel cam-start" id="cam-start">
+      <p class="cam-kicker">CID カメラ体験</p>
+      <h2>カメラの前に立って、<br>体で操作してみよう。</h2>
+      <p>カメラの映像から、体の33か所の位置を読み取ります。映像は保存も送信もせず、この端末の中だけで処理します。</p>
+      <div class="cam-actions">
+        <button class="btn-oc" type="button" id="cam-go">カメラを起動する</button>
+        <button class="btn-ghost" type="button" id="cam-pointer">カメラなしで試す（マウス・指）</button>
+      </div>
+      <p class="cam-note" id="cam-err" role="alert"></p>
+    </div>
+
+    <!-- 体験を選ぶ -->
+    <div class="cam-panel cam-menu" id="cam-menu" hidden>
+      <p class="cam-kicker">体験を選ぶ</p>
+      <h2>手をボタンにかざすと選べます</h2>
+      <div class="cam-grid" id="cam-grid"></div>
+    </div>
+
+    <!-- 学科診断の質問 -->
+    <div class="cam-panel cam-quiz" id="cam-quiz" hidden>
+      <p class="cam-kicker" id="cam-quiz-n"></p>
+      <h2 id="cam-quiz-q"></h2>
+      <div class="cam-ab"><button type="button" class="cam-btn cam-ans" data-a="0"></button><button type="button" class="cam-btn cam-ans" data-a="1"></button></div>
+    </div>
+
+    <!-- 結果 -->
+    <div class="cam-panel cam-result" id="cam-result" hidden>
+      <p class="cam-kicker" id="cam-r-k"></p>
+      <p class="cam-big" id="cam-r-big"></p>
+      <p id="cam-r-text"></p>
+      <div class="cam-actions">
+        <button class="cam-btn" type="button" data-act="again">もう一度</button>
+        <button class="cam-btn" type="button" data-act="menu">ほかの体験</button>
+        <a class="cam-btn cam-link" id="cam-r-link" href="#">学科を見る</a>
+      </div>
+    </div>
+
+    <div class="cam-bar">
+      <button class="cam-tool" type="button" id="cam-back" hidden>体験を選びなおす</button>
+      <button class="cam-tool" type="button" id="cam-full">全画面で展示する</button>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="cam-list-h">
+  <div class="wrap">
+    <div class="sec-head"><h2 id="cam-list-h">5つの体験</h2><p>どれも30秒〜1分で終わります。関係する学科では、ここで動かしている仕組みを自分で作れるようになります。</p></div>
+    <div class="cam-cards" id="cam-cards"></div>
+  </div>
+</section>
+
+<section class="sec sec--light" aria-labelledby="cam-how-h">
+  <div class="wrap">
+    <div class="sec-head"><h2 id="cam-how-h">どうやって読み取っているの？</h2></div>
+    <div class="split-2">
+      <div><h3 style="font-size:var(--t-l)">体の33か所を、1秒に何十回も</h3><p style="margin-top:8px">カメラの映像から、肩・ひじ・手首・腰・ひざなど体の33か所の位置を推定しています。Googleが公開している骨格推定の仕組み（MediaPipe）を使い、すべてこの端末の中で計算しています。</p></div>
+      <div><h3 style="font-size:var(--t-l)">映像は残りません</h3><p style="margin-top:8px">映像を保存したり、インターネットに送ったりはしていません。読み取るのは体の位置だけで、顔が誰かを見分けることもしていません。ページを閉じるとカメラも止まります。</p></div>
+    </div>
+    <ul class="link-list" style="margin-top:48px">
+      <li><a href="game-creator.html">ゲームクリエイター学科<small>体の動きでキャラクターを動かす、モーションキャプチャを学ぶ</small></a></li>
+      <li><a href="ict-design.html">高度ICTデザイン学科<small>AI・XR・ドローンなど、画像から状況を読み取る技術を学ぶ</small></a></li>
+      <li><a href="open-campus.html">オープンキャンパスに参加する<small>本物の機材で、体験授業ができます</small></a></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+<script src="../js/layout.js?v=20261112b"></script>
+<script src="../js/depts-data.js?v=20261112b"></script>
+<script type="module" src="../js/camera.js?v=20261112b"></script>
+<script src="color.js?v=20261112b"></script>
+</body>
+</html>

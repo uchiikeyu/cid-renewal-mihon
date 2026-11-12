@@ -1,0 +1,104 @@
+/* カメラ体験（camera.html）。js/camera.js と組で使う */
+.cam-head { margin-bottom: clamp(24px, 4vw, 40px); }
+.cam-wrap { padding: 0 var(--gutter); }
+.cam {
+  position: relative; overflow: hidden;
+  max-width: 1400px; margin: 0 auto;
+  aspect-ratio: 16 / 9; max-height: 82svh; min-height: 420px;
+  background:
+    linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgba(255, 255, 255, .04) 1px, transparent 1px) 0 0 / 32px 32px,
+    #040A1C;
+  color: #fff;
+  user-select: none; -webkit-user-select: none;
+  touch-action: pan-y;
+}
+/* マウス・指で遊んでいる間だけ、指の動きをページのスクロールに取られないようにする */
+.cam.is-touch { touch-action: none; }
+@media (max-width: 760px) { .cam { aspect-ratio: 3 / 4; max-height: 78svh; } }
+.cam:fullscreen { max-width: none; max-height: none; width: 100vw; height: 100vh; aspect-ratio: auto; }
+.cam-video {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transform: scaleX(-1);
+  filter: grayscale(.7) brightness(.42) contrast(1.15);
+  opacity: 0; transition: opacity .8s;
+}
+.cam.has-video .cam-video { opacity: 1; }
+.cam.is-dim .cam-video { filter: grayscale(1) brightness(.2) contrast(1.2); }
+.cam-canvas { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; }
+
+/* 四隅の枠と表示 */
+.cam-hud { position: absolute; inset: 14px; pointer-events: none; }
+.cam-hud .c { position: absolute; width: 28px; height: 28px; border: 2px solid rgba(255, 255, 255, .55); }
+.cam-hud .tl { left: 0; top: 0; border-right: 0; border-bottom: 0; }
+.cam-hud .tr { right: 0; top: 0; border-left: 0; border-bottom: 0; }
+.cam-hud .bl { left: 0; bottom: 0; border-right: 0; border-top: 0; }
+.cam-hud .br { right: 0; bottom: 0; border-left: 0; border-top: 0; }
+.cam-stat { position: absolute; right: 40px; top: 4px; font-size: .75rem; color: rgba(255, 255, 255, .7); font-variant-numeric: tabular-nums; }
+.cam-privacy { position: absolute; left: 44px; bottom: 16px; font-size: .72rem; color: rgba(255, 255, 255, .7); pointer-events: none; max-width: 60%; }
+.cam-say {
+  position: absolute; left: 50%; top: 22px; transform: translateX(-50%);
+  font-family: var(--f-head); font-weight: 900; font-size: clamp(1.1rem, .8rem + 1.6vw, 2.2rem);
+  text-align: center; pointer-events: none; width: 90%;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, .8);
+}
+
+/* パネル（始める前・選ぶ・質問・結果） */
+.cam-panel {
+  position: absolute; inset: 0; z-index: 5;
+  display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+  padding: clamp(20px, 5vw, 64px);
+}
+.cam-panel[hidden] { display: none; }
+.cam-panel h2 { font-size: clamp(1.4rem, 1rem + 2.4vw, 3rem); line-height: 1.3; }
+.cam-panel > p { max-width: 36em; margin-top: 14px; color: rgba(255, 255, 255, .85); }
+.cam-kicker { font-size: .85rem; font-weight: 700; color: var(--sky) !important; margin: 0 0 10px !important; }
+.cam-start { background: radial-gradient(800px 400px at 50% 40%, rgba(74, 92, 240, .25), transparent 70%); }
+.cam-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 26px; }
+.cam-note { color: #FFB4C2 !important; font-size: .9rem; min-height: 1.4em; }
+.cam-menu, .cam-quiz, .cam-result { pointer-events: none; }
+.cam-menu .cam-btn, .cam-quiz .cam-btn, .cam-result .cam-btn { pointer-events: auto; }
+.cam-result { background: radial-gradient(700px 400px at 50% 50%, rgba(8, 19, 48, .82), rgba(8, 19, 48, .4) 70%); }
+
+/* 手をかざして押すボタン。--p は 0〜1 のたまり具合 */
+.cam-btn {
+  --c: #fff; --p: 0;
+  position: relative; overflow: hidden;
+  border: 2px solid var(--c); background: rgba(8, 19, 48, .72); color: #fff;
+  font: inherit; font-family: var(--f-head); font-weight: 700; text-decoration: none;
+  padding: 14px 22px; cursor: pointer; min-width: 9em;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.cam-btn::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: calc(var(--p) * 100%);
+  background: var(--c); opacity: .45; z-index: -1;
+}
+.cam-btn.is-hover { box-shadow: 0 0 24px var(--c); }
+.cam-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 24px; width: min(980px, 100%); }
+.cam-grid .cam-btn { text-align: left; padding: 18px 20px; min-height: 104px; display: flex; flex-direction: column; justify-content: flex-end; }
+.cam-grid .cam-btn b { font-size: clamp(1rem, .8rem + .8vw, 1.4rem); line-height: 1.35; }
+.cam-grid .cam-btn small { font-weight: 500; font-size: .75rem; opacity: .85; margin-top: 4px; }
+@media (max-width: 760px) { .cam-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } .cam-grid .cam-btn { min-height: 84px; padding: 12px; } }
+.cam-ab { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 20vw, 360px); width: 100%; margin-top: 28px; }
+.cam-ans { min-height: 32%; padding: 24px; font-size: clamp(1rem, .8rem + 1.2vw, 1.8rem); line-height: 1.4; }
+.cam-big { font-family: var(--f-head); font-weight: 900; font-size: clamp(2.6rem, 1.4rem + 6vw, 6rem); line-height: 1.1; margin: 4px 0 10px !important; color: #fff !important; }
+.cam-link { display: inline-block; }
+
+/* 下のボタン */
+.cam-bar { position: absolute; right: 18px; bottom: 12px; z-index: 6; display: flex; gap: 8px; }
+.cam-tool { font: inherit; font-size: .78rem; font-weight: 700; color: #fff; background: rgba(8, 19, 48, .7); border: 1px solid rgba(255, 255, 255, .45); padding: 8px 14px; cursor: pointer; }
+.cam-tool:hover { background: rgba(255, 255, 255, .15); }
+.cam-tool[hidden] { display: none; }
+
+/* 全画面（展示）では文字を大きく */
+.cam:fullscreen .cam-say { font-size: clamp(1.6rem, 1rem + 2vw, 3.2rem); }
+.cam:fullscreen .cam-privacy { font-size: .95rem; }
+.cam:fullscreen .cam-grid .cam-btn { min-height: 150px; }
+
+/* 下の一覧 */
+.cam-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.cam-card { border-top: 4px solid var(--c); background: var(--navy-2); padding: 22px; }
+.cam-card h3 { font-size: var(--t-l); }
+.cam-card p { color: var(--sky); font-size: var(--t-s); margin-top: 8px; }
+.cam-card a { display: inline-block; margin-top: 12px; font-size: var(--t-s); font-weight: 700; }
+
