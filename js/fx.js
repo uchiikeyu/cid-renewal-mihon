@@ -96,9 +96,9 @@
     let dpr = 1, W = 0, H = 0, running = false;
     const pts = [], sparks = [];
     const LIFE = 420;
-    // 色を増やした版（<html data-fx="spectrum">）では、光の線が8学科の色に移り変わる
+    // 色を増やした版（<html data-fx="spectrum">）では、光の線が9学科の色に移り変わる
     const SPEC = document.documentElement.dataset.fx === 'spectrum'
-      ? ['#4A5CF0', '#00A0E9', '#22A33A', '#8040C0', '#F05A28', '#FF4C7D', '#F08C1E', '#1A9A8A'] : null;
+      ? ['#4A5CF0', '#00A0E9', '#22A33A', '#8040C0', '#F05A28', '#FF4C7D', '#F08C1E', '#1A9A8A', '#F2B705'] : null;
     let seq = 0;
     function size() {
       dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight;
@@ -109,13 +109,13 @@
     function add(x, y) {
       const last = pts[pts.length - 1];
       if (last && Math.hypot(x - last.x, y - last.y) < 3) return;
-      pts.push({ x, y, t: performance.now(), c: SPEC ? SPEC[Math.floor(seq++ / 5) % 8] : null }); kick();
+      pts.push({ x, y, t: performance.now(), c: SPEC ? SPEC[Math.floor(seq++ / 5) % SPEC.length] : null }); kick();
     }
     function burst(x, y) {
       const n = 14;
       for (let i = 0; i < n; i++) {
         const a = (i / n) * Math.PI * 2 + rnd(-.2, .2), v = rnd(2.5, 7);
-        sparks.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, t: performance.now(), red: i % 5 === 0, c: SPEC ? SPEC[i % 8] : null });
+        sparks.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, t: performance.now(), red: i % 5 === 0, c: SPEC ? SPEC[i % SPEC.length] : null });
       }
       kick();
     }

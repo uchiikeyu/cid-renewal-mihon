@@ -108,16 +108,23 @@ CID.formatSec = function (s) {
       sub: '配線のしかたを選んで、スイッチを押してみてください。',
       after: '配線のしくみは、<b>第二種電気工事士</b>の試験でも問われる基本です。実技で本物の配線もします。',
       play: playCircuit
+    },
+    {
+      name: 'スペーステックエンジニア学科', yrs: '2年制・2028年新設', short: 'CAD・データ分析・組み込みプログラミング',
+      q: '人工衛星のアンテナを、地球に向けよう',
+      sub: 'ずれた向きを戻す「強さ」を決めて、姿勢の制御を動かします。弱すぎても、強すぎてもうまくいきません。',
+      after: '人工衛星は、センサーで向きを測り、プログラムで自動的に姿勢を直しています。<b>組み込みプログラミング</b>と制御の考え方は、宇宙機器の設計・運用の土台です。',
+      play: playSat
     }
   ];
 
-  const SLUGS = ['ict-design', 'information-system', 'agri-foodtech', 'game-creator', 'creative-design', 'pop-culture', 'internet-video-creator', 'electro-communications'];
+  const SLUGS = ['ict-design', 'information-system', 'agri-foodtech', 'game-creator', 'creative-design', 'pop-culture', 'internet-video-creator', 'electro-communications', 'space-tech-engineer'];
   DEPTS.forEach((d, k) => { d.slug = SLUGS[k]; });
   CID.LAB = DEPTS;
-  CID.plays = { drone: playDrone, password: playPassword, plant: playPlant, hitbox: playHitbox, poster: playPoster, pixel: playPixel, thumb: playThumb, circuit: playCircuit };
+  CID.plays = { drone: playDrone, password: playPassword, plant: playPlant, hitbox: playHitbox, poster: playPoster, pixel: playPixel, thumb: playThumb, circuit: playCircuit, sat: playSat };
 
   if (tabs && stage) {
-    // 8学科を写真タイルで並べる。選んだ学科だけ色が付き、学科の色で光る
+    // 9学科を写真タイルで並べる。選んだ学科だけ色が付き、学科の色で光る
     const info = k => (window.CID.DEPTS && CID.DEPTS[DEPTS[k].slug]) || {};
     const photo = k => CID.img ? CID.img((CID.PEOPLE_PHOTO || {})[DEPTS[k].slug] || (info(k).photos || [])[0]) : '';
     DEPTS.forEach((d, i) => {
@@ -140,6 +147,7 @@ CID.formatSec = function (s) {
       if (cleanup) { cleanup(); cleanup = null; }
       const d = DEPTS[i];
       stage.style.setProperty('--lc', info(i).color || '#DF032E');
+      stage.style.setProperty('--lc-ink', CID.ink ? CID.ink(info(i).color || '#DF032E') : '#fff');
       stage.setAttribute('aria-labelledby', 'labtab-' + i);
       stage.innerHTML = `
         <div class="lab-info">
@@ -163,6 +171,9 @@ CID.formatSec = function (s) {
       });
       const first = current < 0;
       current = i;
+      // 横に並んだ写真タイルが画面からはみ出すときは、選んだタイルが見える位置まで送る
+      const tile = tabs.children[i];
+      if (tabs.scrollWidth > tabs.clientWidth) tabs.scrollTo({ left: tile.offsetLeft - (tabs.clientWidth - tile.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
       if (first || reduce || !stage.animate) { render(i); return; }
       // 学科の色が横切ってから、次の体験に切り替わる
       busy = true;
@@ -524,6 +535,79 @@ CID.formatSec = function (s) {
     }
     root.querySelectorAll('[data-m]').forEach(x => x.onclick = () => { mode = x.dataset.m; a = b = false; draw(); });
     draw();
+  }
+
+
+  // ---------- スペーステック：人工衛星の姿勢制御 ----------
+  // センサーの値が少し遅れて届く（0.2秒）中で、ずれを戻す強さ K を決める。
+  // 角度 θ の動き：θ'' = -K・θ(遅れ) - 2.0・ω(遅れ)。K が小さいと戻らず、大きいと揺れて止まらない
+  function playSat(root, out) {
+    const KS = [0.3, 0.6, 1, 1.5, 2, 3, 4, 6, 8, 10];
+    let lv = 2, raf = 0, running = false;
+    root.innerHTML = `<div class="sat-wrap">
+      <svg class="sat-svg" viewBox="0 0 480 300" role="img" aria-label="人工衛星と地球">
+        <defs><radialGradient id="satEarth" cx="50%" cy="20%" r="70%"><stop offset="0" stop-color="#4FA3FF"/><stop offset=".6" stop-color="#1B4FA8"/><stop offset="1" stop-color="#0B2457"/></radialGradient></defs>
+        <g class="sat-stars">${Array.from({ length: 40 }, () => `<circle cx="${(Math.random() * 480).toFixed(0)}" cy="${(Math.random() * 200).toFixed(0)}" r="${(Math.random() * 1.2 + .3).toFixed(1)}" fill="#fff" opacity="${(Math.random() * .6 + .3).toFixed(2)}"/>`).join('')}</g>
+        <circle cx="240" cy="560" r="300" fill="url(#satEarth)"/>
+        <circle cx="240" cy="560" r="306" fill="none" stroke="#9DD2FF" stroke-opacity=".35" stroke-width="6"/>
+        <g data-sat transform="translate(240 118)">
+          <path data-beam d="M-6 26 L-70 150 L70 150 L6 26 Z" fill="#9DBEF0" opacity=".12"/>
+          <rect x="-92" y="-10" width="62" height="20" fill="#2C4FA8" stroke="#9DBEF0"/><rect x="30" y="-10" width="62" height="20" fill="#2C4FA8" stroke="#9DBEF0"/>
+          <line x1="-30" y1="0" x2="-20" y2="0" stroke="#9DBEF0" stroke-width="3"/><line x1="20" y1="0" x2="30" y2="0" stroke="#9DBEF0" stroke-width="3"/>
+          <rect x="-20" y="-22" width="40" height="44" fill="#F2B705" stroke="#fff" stroke-width="1.5"/>
+          <path d="M-14 22 Q0 40 14 22 Z" fill="#fff"/><line x1="0" y1="22" x2="0" y2="32" stroke="#fff" stroke-width="2"/>
+        </g>
+        <text data-st x="240" y="284" fill="#fff" font-size="15" text-anchor="middle"></text>
+      </svg>
+      <svg class="sat-graph" viewBox="0 0 480 90" role="img" aria-label="向きのずれのグラフ">
+        <rect x="0" y="39" width="480" height="12" fill="#22A33A" opacity=".25"/>
+        <line x1="0" y1="45" x2="480" y2="45" stroke="#9DBEF0" stroke-opacity=".4"/>
+        <polyline data-line fill="none" stroke="#F2B705" stroke-width="2"/>
+        <text x="6" y="14" fill="#9DBEF0" font-size="11">向きのずれ（緑の帯＝地球に向いている）</text>
+      </svg></div>
+      <label class="slider"><span>ずれを戻す強さ</span><input type="range" min="1" max="10" step="1" value="${lv}" aria-label="ずれを戻す強さ（1〜10）"><output>${lv}</output></label>
+      <div class="ctl-row"><button class="chip chip--go" data-run>制御を動かす</button></div>`;
+    const sat = root.querySelector('[data-sat]'), beam = root.querySelector('[data-beam]'), st = root.querySelector('[data-st]');
+    const line = root.querySelector('[data-line]'), sl = root.querySelector('input'), o = root.querySelector('output');
+    const pose = (deg, ok) => {
+      sat.setAttribute('transform', `translate(240 118) rotate(${deg.toFixed(1)})`);
+      beam.setAttribute('fill', ok ? '#3CCB7F' : '#9DBEF0'); beam.setAttribute('opacity', ok ? '.45' : '.12');
+      st.textContent = ok ? '通信中' : `ずれ ${Math.abs(deg).toFixed(0)}°`;
+    };
+    pose(50, false);
+    sl.addEventListener('input', () => { lv = +sl.value; o.textContent = lv; });
+    root.querySelector('[data-run]').onclick = () => {
+      if (running) return;
+      running = true; out.textContent = '';
+      const K = KS[lv - 1], dt = 1 / 60, T = 8, delay = 12;
+      let th = 50 * Math.PI / 180, w = 0, t = 0, last = 0;
+      const buf = Array(delay).fill([th, w]), pts = [];
+      let prevNow = performance.now();
+      const step = (now = performance.now()) => {
+        // 8秒の動きを約4秒で見せる。画面の速さ（fps）に関係なく、経った時間ぶん進める
+        const n = Math.max(1, Math.min(480, Math.round((now - prevNow) / 1000 * 120))); prevNow = now;
+        for (let k = 0; k < n && t < T; k++) {
+          const [mt, mw] = buf.shift(); buf.push([th, w]);
+          w += (-K * mt - 2 * mw) * dt; th += w * dt; t += dt;
+          const deg = th * 180 / Math.PI;
+          if (Math.abs(deg) >= 3) last = t;
+          pts.push(`${(t / T * 480).toFixed(1)},${(45 - Math.max(-44, Math.min(44, deg))).toFixed(1)}`);
+        }
+        const deg = th * 180 / Math.PI;
+        const shown = ((deg + 180) % 360 + 360) % 360 - 180;
+        pose(shown, Math.abs(deg) < 3);
+        line.setAttribute('points', pts.join(' '));
+        if (t < T) { raf = requestAnimationFrame(step); return; }
+        running = false;
+        const end = Math.abs(deg);
+        out.textContent = end < 3 && last < 4.5 ? `成功！ 約${last.toFixed(1)}秒で地球に向きました。強さ ${lv} は、ちょうどよい値です。`
+          : end < 3 ? (lv >= 8 ? `揺れが収まるまで${last.toFixed(1)}秒かかりました。強さを下げると、速く落ち着きます。` : `向きましたが、${last.toFixed(1)}秒かかりました。もう少し強くすると速く戻せます。`)
+            : lv <= 3 ? '弱すぎて、なかなか地球に向きません。強さを上げてみましょう。'
+              : '強すぎて、行き過ぎては戻るを繰り返しています。センサーの値が少し遅れて届くためです。強さを下げてみましょう。';
+      };
+      raf = requestAnimationFrame(step);
+    };
+    return () => cancelAnimationFrame(raf);
   }
 
   function wait(ms) { return new Promise(r => setTimeout(r, ms)); }

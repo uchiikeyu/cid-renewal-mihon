@@ -2,7 +2,7 @@
 // 読み取りは lib/mediapipe（Google MediaPipe・Apache-2.0）を使い、すべてこの端末の中で行う。映像は保存も送信もしない
 // カメラがない・使わない人は「マウス・指」で、手の代わりに操作できる
 const ROOT = window.CID_ROOT || '';
-const SPEC = ['#4A5CF0', '#00A0E9', '#22A33A', '#8040C0', '#F05A28', '#FF4C7D', '#F08C1E', '#1A9A8A'];
+const SPEC = ['#4A5CF0', '#00A0E9', '#22A33A', '#8040C0', '#F05A28', '#FF4C7D', '#F08C1E', '#1A9A8A', '#F2B705'];
 const $ = id => document.getElementById(id);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
@@ -20,8 +20,8 @@ const BONES = [[11, 12], [11, 13], [13, 15], [12, 14], [14, 16], [11, 23], [12, 
 const GAMES = [
   { id: 'avatar', title: 'なりきり光の人型', dept: 'ゲームクリエイター学科', slug: 'game-creator', color: '#8040C0', desc: '体の動きに合わせて、光でできた人型が同じ動きをします。お題の3つのポーズに挑戦。VTuberやゲームのモーションキャプチャと同じ考え方です。' },
   { id: 'drone', title: '手でドローンを飛ばす', dept: '高度ICTデザイン学科', slug: 'ict-design', color: '#4A5CF0', desc: '上げた手の位置にドローンがついてきます。光の輪を6つくぐるまでのタイムを競います。' },
-  { id: 'brush', title: '光の筆で空中に描く', dept: 'クリエイティブデザイン学科', slug: 'creative-design', color: '#F05A28', desc: '手を肩より上に上げると、指先が光の筆になります。色は8学科の色に移り変わります。' },
-  { id: 'quiz', title: '体で答える学科診断', dept: '8つの学科', slug: 'departments', color: '#00A0E9', desc: '左右どちらかの答えに手をかざして、5つの質問に答えます。合いそうな学科が分かります。' },
+  { id: 'brush', title: '光の筆で空中に描く', dept: 'クリエイティブデザイン学科', slug: 'creative-design', color: '#F05A28', desc: '手を肩より上に上げると、指先が光の筆になります。色は9つの学科の色に移り変わります。' },
+  { id: 'quiz', title: '体で答える学科診断', dept: '9つの学科', slug: 'departments', color: '#00A0E9', desc: '左右どちらかの答えに手をかざして、5つの質問に答えます。合いそうな学科が分かります。' },
   { id: 'letters', title: '文字をつかまえて組み立てる', dept: 'CID 中央情報大学校', slug: 'index', color: '#FF4C7D', desc: '画面を漂う「未来をツクル人になる。」の文字に手で触れると、元の場所に戻ります。全部そろえるまでのタイムを競います。' }
 ];
 $('cam-cards').innerHTML = GAMES.map(g => `<div class="cam-card" style="--c:${g.color}"><h3>${g.title}</h3><p>${g.desc}</p><a href="${g.slug}.html">${g.dept}</a></div>`).join('');
@@ -173,7 +173,7 @@ function dot(p, r, color, alpha = 1) {
 function skeleton(p, k = 1, alpha = .9) {
   const n = Math.ceil(33 * k);
   BONES.forEach(([a, b], i) => { if (a < n && b < n && p[a].v > .3 && p[b].v > .3) glowLine(p[a], p[b], 2, 'rgba(255,255,255,.75)', alpha * .8); });
-  for (let i = 0; i < n; i++) if (p[i].v > .3) dot(p[i], i === 0 ? 5 : 3.5, SPEC[i % 8], alpha);
+  for (let i = 0; i < n; i++) if (p[i].v > .3) dot(p[i], i === 0 ? 5 : 3.5, SPEC[i % SPEC.length], alpha);
 }
 function handCursor(h, t) {
   ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.shadowColor = '#9DBEF0'; ctx.shadowBlur = 12;
@@ -249,16 +249,16 @@ PLAY.avatar = {
       g.trail.push(pose.map(p => ({ ...p }))); if (g.trail.length > 7) g.trail.shift();
       const s = bodyScale();
       // 残像
-      g.trail.forEach((tp, k) => { if (k < g.trail.length - 1) BONES.forEach(([a, b], i) => glowLine(tp[a], tp[b], s * .16, SPEC[i % 8], .08 + k * .03)); });
+      g.trail.forEach((tp, k) => { if (k < g.trail.length - 1) BONES.forEach(([a, b], i) => glowLine(tp[a], tp[b], s * .16, SPEC[i % SPEC.length], .08 + k * .03)); });
       // 光の人型
-      BONES.forEach(([a, b], i) => { if (pose[a].v > .3 && pose[b].v > .3) glowLine(pose[a], pose[b], s * .2, SPEC[i % 8], .95); });
+      BONES.forEach(([a, b], i) => { if (pose[a].v > .3 && pose[b].v > .3) glowLine(pose[a], pose[b], s * .2, SPEC[i % SPEC.length], .95); });
       const hr = Math.max(dist(pose[7], pose[8]) * .75, s * .28);
       ctx.lineWidth = s * .08; ctx.strokeStyle = '#fff'; ctx.shadowColor = '#9DBEF0'; ctx.shadowBlur = 30;
       ctx.beginPath(); ctx.arc(pose[0].x, pose[0].y, hr, 0, Math.PI * 2); ctx.stroke(); ctx.shadowBlur = 0;
       // 手を速く動かすと光の粒が散る
       [15, 16].forEach(i => {
         const prev = g.trail[g.trail.length - 2];
-        if (prev && dist(prev[i], pose[i]) > s * .12) for (let n = 0; n < 3; n++) g.parts.push({ x: pose[i].x, y: pose[i].y, vx: (Math.random() - .5) * 8, vy: (Math.random() - .5) * 8, life: 1, c: SPEC[(Math.random() * 8) | 0] });
+        if (prev && dist(prev[i], pose[i]) > s * .12) for (let n = 0; n < 3; n++) g.parts.push({ x: pose[i].x, y: pose[i].y, vx: (Math.random() - .5) * 8, vy: (Math.random() - .5) * 8, life: 1, c: SPEC[(Math.random() * SPEC.length) | 0] });
       });
       // お題のポーズ
       if (g.i < 3) {
@@ -267,7 +267,7 @@ PLAY.avatar = {
         g.hold = ok(pose) ? g.hold + dt : 0;
         if (g.hold > .6) {
           g.i++; g.hold = 0; g.flash = 1;
-          for (let n = 0; n < 60; n++) g.parts.push({ x: pose[0].x, y: pose[0].y + s, vx: (Math.random() - .5) * 18, vy: (Math.random() - .5) * 18, life: 1, c: SPEC[n % 8] });
+          for (let n = 0; n < 60; n++) g.parts.push({ x: pose[0].x, y: pose[0].y + s, vx: (Math.random() - .5) * 18, vy: (Math.random() - .5) * 18, life: 1, c: SPEC[n % SPEC.length] });
           if (g.i === 3) g.done = t;
         }
       } else say.textContent = 'クリア！ 自由に動いてみよう';
@@ -291,7 +291,7 @@ PLAY.drone = {
     const f = 1 - Math.pow(.82, dt * 60);
     if (h) { g.d.x += (h.x - g.d.x) * f; g.d.y += (h.y - g.d.y) * f; say.textContent = `光の輪をくぐろう　${g.n} / ${GATES}`; }
     else say.textContent = '手を上げると、ドローンが手についてきます';
-    const R = Math.min(W, H) * .1, c = SPEC[g.n % 8];
+    const R = Math.min(W, H) * .1, c = SPEC[g.n % SPEC.length];
     // 光の輪
     ctx.lineWidth = 8; ctx.strokeStyle = c; ctx.shadowColor = c; ctx.shadowBlur = 30;
     ctx.beginPath(); ctx.ellipse(g.gate.x, g.gate.y, R, R * 1.05, 0, 0, Math.PI * 2); ctx.stroke(); ctx.shadowBlur = 0;
@@ -331,24 +331,24 @@ PLAY.brush = {
     if (pen) {
       if (!g.cur) { g.cur = []; g.strokes.push(g.cur); }
       const last = g.cur[g.cur.length - 1];
-      if (!last || dist(last, pen) > 3) { g.k += 1; g.cur.push({ x: pen.x, y: pen.y, c: SPEC[Math.floor(g.k / 14) % 8] }); }
+      if (!last || dist(last, pen) > 3) { g.k += 1; g.cur.push({ x: pen.x, y: pen.y, c: SPEC[Math.floor(g.k / 14) % SPEC.length] }); }
     } else g.cur = null;
     g.redraw = () => g.strokes.forEach(st => { for (let i = 1; i < st.length; i++) glowLine(st[i - 1], st[i], 7, st[i].c, .95); });
     g.redraw();
     if (pen) dot(pen, 8, '#fff');
     say.textContent = mode === 'pointer' ? '押したまま動かすと描けます' : '手を肩より上に上げると描けます（両手を頭の上で全部消す）';
     stat.textContent = `のこり ${timer(t, LIMIT)} 秒`;
-    if (t > LIMIT) { g.keep = true; finish({ kicker: '光の筆', big: '作品完成', text: '線の色は、8つの学科の色に移り変わります。写真に撮って残してください。' }); }
+    if (t > LIMIT) { g.keep = true; finish({ kicker: '光の筆', big: '作品完成', text: '線の色は、9つの学科の色に移り変わります。写真に撮って残してください。' }); }
   }
 };
 
 // A. 体で答える学科診断（2択×5問）
 const QUIZ = [
-  ['作るなら、どっち？', ['画面の中のもの（ゲーム・アプリ・動画）', { 'game-creator': 2, 'information-system': 1, 'internet-video-creator': 1, 'ict-design': 1 }], ['手でさわれるもの（機械・料理・作品）', { 'electro-communications': 2, 'agri-foodtech': 2, 'creative-design': 1 }]],
-  ['「すごい！」と言われたいのは？', ['作ったものが動いたとき', { 'information-system': 2, 'ict-design': 2, 'game-creator': 1, 'electro-communications': 1 }], ['見た目をかっこよく仕上げたとき', { 'creative-design': 2, 'pop-culture': 2, 'internet-video-creator': 1 }]],
+  ['作るなら、どっち？', ['画面の中のもの（ゲーム・アプリ・動画）', { 'game-creator': 2, 'information-system': 1, 'internet-video-creator': 1, 'ict-design': 1 }], ['手でさわれるもの（機械・料理・作品）', { 'electro-communications': 2, 'agri-foodtech': 2, 'creative-design': 1, 'space-tech-engineer': 1 }]],
+  ['「すごい！」と言われたいのは？', ['作ったものが動いたとき', { 'information-system': 2, 'ict-design': 2, 'game-creator': 1, 'electro-communications': 1, 'space-tech-engineer': 1 }], ['見た目をかっこよく仕上げたとき', { 'creative-design': 2, 'pop-culture': 2, 'internet-video-creator': 1 }]],
   ['好きなのは、どっち？', ['キャラクター・アニメ・ゲーム', { 'pop-culture': 2, 'game-creator': 2 }], ['SNSのトレンド・ニュース', { 'internet-video-creator': 2, 'ict-design': 1, 'information-system': 1 }]],
   ['グループで作るなら、どの役？', ['しくみを考えて組み立てる', { 'information-system': 2, 'ict-design': 1, 'electro-communications': 1 }], ['アイデアを出して形にする', { 'creative-design': 1, 'internet-video-creator': 1, 'game-creator': 1, 'agri-foodtech': 1, 'pop-culture': 1 }]],
-  ['気になるのは、どっち？', ['AI・ロボット・ドローン', { 'ict-design': 2, 'information-system': 1 }], ['食べもの・農業・エネルギー', { 'agri-foodtech': 2, 'electro-communications': 2 }]]
+  ['気になるのは、どっち？', ['AI・ロボット・宇宙', { 'ict-design': 2, 'information-system': 1, 'space-tech-engineer': 2 }], ['食べもの・農業・エネルギー', { 'agri-foodtech': 2, 'electro-communications': 2 }]]
 ];
 PLAY.quiz = {
   start(g) { g.i = 0; g.score = {}; this.show(g); P.quiz.hidden = false; },
@@ -356,7 +356,7 @@ PLAY.quiz = {
     const q = QUIZ[g.i];
     $('cam-quiz-n').textContent = `質問 ${g.i + 1} / ${QUIZ.length}`;
     $('cam-quiz-q').textContent = q[0];
-    P.quiz.querySelectorAll('.cam-ans').forEach((b, k) => { b.textContent = q[k + 1][0]; b.style.setProperty('--c', SPEC[(g.i * 2 + k) % 8]); dwell.set(b, 0); });
+    P.quiz.querySelectorAll('.cam-ans').forEach((b, k) => { b.textContent = q[k + 1][0]; b.style.setProperty('--c', SPEC[(g.i * 2 + k) % SPEC.length]); dwell.set(b, 0); });
   },
   answer(g, k) {
     const add = QUIZ[g.i][k + 1][1];
@@ -392,11 +392,11 @@ PLAY.letters = {
         if (l.x < g.r || l.x > W - g.r) l.vx *= -1;
         if (l.y < H * .34 || l.y > H - g.r) l.vy *= -1;
         if (hs.some(h => dist(h, l) < g.r * 1.3)) l.done = true;
-        ctx.globalAlpha = .9; ctx.fillStyle = 'rgba(8,19,48,.55)'; ctx.strokeStyle = SPEC[i % 8]; ctx.lineWidth = 3; ctx.shadowColor = SPEC[i % 8]; ctx.shadowBlur = 20;
+        ctx.globalAlpha = .9; ctx.fillStyle = 'rgba(8,19,48,.55)'; ctx.strokeStyle = SPEC[i % SPEC.length]; ctx.lineWidth = 3; ctx.shadowColor = SPEC[i % SPEC.length]; ctx.shadowBlur = 20;
         ctx.beginPath(); ctx.arc(l.x, l.y, g.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.shadowBlur = 0; ctx.globalAlpha = 1;
       }
-      ctx.fillStyle = l.done ? SPEC[i % 8] : '#fff'; ctx.font = `900 ${g.r * 1.15}px "Zen Kaku Gothic New", sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      if (l.done) { ctx.shadowColor = SPEC[i % 8]; ctx.shadowBlur = 16; }
+      ctx.fillStyle = l.done ? SPEC[i % SPEC.length] : '#fff'; ctx.font = `900 ${g.r * 1.15}px "Zen Kaku Gothic New", sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      if (l.done) { ctx.shadowColor = SPEC[i % SPEC.length]; ctx.shadowBlur = 16; }
       ctx.fillText(l.c, l.x, l.y); ctx.shadowBlur = 0;
     });
     const left = g.ls.filter(l => !l.done).length;

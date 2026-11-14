@@ -16,7 +16,8 @@
     ['ict-design', '高度ICTデザイン学科'], ['information-system', '情報システム学科'],
     ['agri-foodtech', 'アグリ・フードテック学科'], ['game-creator', 'ゲームクリエイター学科'],
     ['creative-design', 'クリエイティブデザイン学科'], ['pop-culture', 'ポップカルチャー学科'],
-    ['internet-video-creator', 'ネット動画クリエイター学科'], ['electro-communications', '電気通信学科']
+    ['internet-video-creator', 'ネット動画クリエイター学科'], ['electro-communications', '電気通信学科'],
+    ['space-tech-engineer', 'スペーステックエンジニア学科']
   ];
   const SUB = [
     ['camera.html', 'カメラ体験'], ['news.html', 'お知らせ'], ['instructor.html', '講師紹介'], ['about.html', '学校概要・情報公開'],
@@ -89,6 +90,6 @@
 
   // 全ページ共通の動き
   const fx = document.createElement('script');
-  fx.src = (window.CID_ROOT || '') + 'js/fx.js?v=20261114';
+  fx.src = (window.CID_ROOT || '') + 'js/fx.js?v=20261114g';
   document.body.appendChild(fx);
 })();

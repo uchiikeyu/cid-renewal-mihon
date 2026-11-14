@@ -8,15 +8,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=20261114">
-<link rel="stylesheet" href="css/pages.css?v=20261114">
+<link rel="stylesheet" href="css/style.css?v=20261114g">
+<link rel="stylesheet" href="css/pages.css?v=20261114g">
 <!-- meta:start（build_meta.py が書き込む。手で直さない） -->
-<meta name="description" content="CIDの8つの学科を、5つの質問で探せます。学科ごとの年数・学べること・目指せる仕事を比べられます。">
+<meta name="description" content="CIDの9つの学科を、5つの質問で探せます。学科ごとの年数・学べること・目指せる仕事を比べられます。">
 <link rel="canonical" href="https://uchiikeyu.github.io/cid-renewal-mihon/departments.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="CID 中央情報大学校">
 <meta property="og:title" content="自分に合う学科を探す｜CID 中央情報大学校">
-<meta property="og:description" content="CIDの8つの学科を、5つの質問で探せます。学科ごとの年数・学べること・目指せる仕事を比べられます。">
+<meta property="og:description" content="CIDの9つの学科を、5つの質問で探せます。学科ごとの年数・学べること・目指せる仕事を比べられます。">
 <meta property="og:url" content="https://uchiikeyu.github.io/cid-renewal-mihon/departments.html">
 <meta property="og:image" content="https://uchiikeyu.github.io/cid-renewal-mihon/images/og/departments.jpg">
 <meta property="og:image:width" content="1200">
@@ -35,7 +35,7 @@
     <div>
       <p class="crumb"><a href="index.html">トップ</a>　／　学科</p>
       <h1>自分に合う学科を探す</h1>
-      <p class="lead">CIDには8つの学科があります。まだ何がしたいか決まっていなくても大丈夫。5つの質問に答えると、近い学科が分かります。</p>
+      <p class="lead">CIDには9つの学科があります（2028年4月新設のスペーステックエンジニア学科を含みます）。まだ何がしたいか決まっていなくても大丈夫。5つの質問に答えると、近い学科が分かります。</p>
     </div>
   </div>
 </section>
@@ -48,7 +48,7 @@
 
 <section class="sec" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head"><h2>8つの学科</h2><p>年数・専攻・目指せる仕事の一覧です。</p></div>
+    <div class="sec-head"><h2>9つの学科</h2><p>年数・専攻・目指せる仕事の一覧です。</p></div>
     <div class="dept-grid" id="dept-grid"></div>
   </div>
 </section>
@@ -67,8 +67,8 @@
 </section>
 
 </main>
-<script src="js/layout.js?v=20261114"></script>
-<script src="js/depts-data.js?v=20261114"></script>
+<script src="js/layout.js?v=20261114g"></script>
+<script src="js/depts-data.js?v=20261114g"></script>
 <script>
 (function () {
   const D = CID.DEPTS, O = CID.DEPT_ORDER;
@@ -85,15 +85,15 @@
       ['ゲームをする。自分でも作ってみたい', { 'game-creator': 2, 'ict-design': 1 }],
       ['絵を描く・アニメやマンガを見る', { 'pop-culture': 2, 'creative-design': 1 }],
       ['動画を見る・撮る・編集する', { 'internet-video-creator': 2 }],
-      ['機械や家電をいじる・組み立てる', { 'electro-communications': 2, 'ict-design': 1 }],
+      ['機械や家電をいじる・組み立てる', { 'electro-communications': 2, 'ict-design': 1, 'space-tech-engineer': 1 }],
       ['料理をする・植物を育てる', { 'agri-foodtech': 2 }]]],
     ['「すごい！」と言われたいのは、どんなとき？', [
-      ['自分で作ったものが動いたとき', { 'information-system': 2, 'ict-design': 1, 'game-creator': 1 }],
+      ['自分で作ったものが動いたとき', { 'information-system': 2, 'ict-design': 1, 'game-creator': 1, 'space-tech-engineer': 1 }],
       ['見た目をかっこよく仕上げたとき', { 'creative-design': 2, 'pop-culture': 1 }],
       ['たくさんの人に見てもらえたとき', { 'internet-video-creator': 2, 'creative-design': 1 }],
       ['難しい資格に受かったとき', { 'electro-communications': 2, 'information-system': 1 }]]],
     ['グループで何かを作るとき、やりたい役は？', [
-      ['しくみを考えて組み立てる', { 'information-system': 2, 'ict-design': 1 }],
+      ['しくみを考えて組み立てる', { 'information-system': 2, 'ict-design': 1, 'space-tech-engineer': 1 }],
       ['アイデアを出して、みんなをまとめる', { 'game-creator': 1, 'internet-video-creator': 1, 'agri-foodtech': 1 }],
       ['黙々と作り込む', { 'pop-culture': 2, 'game-creator': 1 }],
       ['現場で体を動かす', { 'electro-communications': 2, 'agri-foodtech': 1 }]]],
@@ -102,9 +102,10 @@
       ['新作ゲーム・アニメの発表', { 'game-creator': 2, 'pop-culture': 1 }],
       ['SNSのトレンド・話題の広告', { 'internet-video-creator': 2, 'creative-design': 1 }],
       ['食べもの・農業・環境', { 'agri-foodtech': 2 }],
-      ['電気・エネルギー・インフラ', { 'electro-communications': 2 }]]],
+      ['電気・エネルギー・インフラ', { 'electro-communications': 2 }],
+      ['宇宙・ロケット・人工衛星', { 'space-tech-engineer': 3 }]]],
     ['学校で学ぶ年数は、どれくらいがいい？', [
-      ['早く働きたい（1〜2年）', { 'information-system': 1, 'creative-design': 1, 'pop-culture': 1, 'internet-video-creator': 1, 'electro-communications': 1, 'agri-foodtech': 1 }],
+      ['早く働きたい（1〜2年）', { 'information-system': 1, 'creative-design': 1, 'pop-culture': 1, 'internet-video-creator': 1, 'electro-communications': 1, 'agri-foodtech': 1, 'space-tech-engineer': 1 }],
       ['じっくり3〜4年かけたい', { 'ict-design': 2, 'game-creator': 2 }],
       ['まだ決めていない', {}]]]
   ];

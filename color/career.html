@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/style.css?v=20261114">
-<link rel="stylesheet" href="../css/pages.css?v=20261114">
-<link rel="stylesheet" href="color.css?v=20261114">
+<link rel="stylesheet" href="../css/style.css?v=20261114g">
+<link rel="stylesheet" href="../css/pages.css?v=20261114g">
+<link rel="stylesheet" href="color.css?v=20261114g">
 <!-- meta:start（build_meta.py が書き込む。手で直さない） -->
 <meta name="description" content="1年次の10月から、担任と就職指導センターが一人ひとりの就職活動を支えます。なりたい仕事から、学ぶ学科と主な就職先を逆算できます。">
 <link rel="canonical" href="https://uchiikeyu.github.io/cid-renewal-mihon/color/career.html">
@@ -105,8 +105,8 @@
 <section class="cta-band"><div class="wrap"><div><h2>就職の話も、オープンキャンパスで。</h2><p>当日は就職サポートの説明と、個別の相談も受け付けています。</p></div><a class="btn-white" href="open-campus.html">日程を見て予約する</a></div></section>
 
 </main>
-<script src="../js/layout.js?v=20261114"></script>
-<script src="../js/depts-data.js?v=20261114"></script>
+<script src="../js/layout.js?v=20261114g"></script>
+<script src="../js/depts-data.js?v=20261114g"></script>
 <script>
 (function () {
   // 主な就職先（今のサイトの就職実績ページより、各学科の一部）
@@ -133,7 +133,7 @@
     path.style.setProperty('--dept', d.color);
     path.innerHTML = `<div><h4>どんな仕事？</h4><p><b style="font-family:var(--f-head);font-size:var(--t-l)">${j.n}</b></p><p style="margin-top:6px">${j.t}</p></div>
       <div style="border-top:4px solid var(--dept)"><h4>目指せる学科</h4><p><a href="${j.k}.html" style="font-family:var(--f-head);font-weight:900;font-size:var(--t-l)">${d.name}</a></p><p style="margin-top:6px;color:var(--sky)">${d.years}　${d.majors.map(m => m[0]).join('・')}</p></div>
-      <div><h4>先輩の主な就職先</h4>${co ? `<ul>${co.slice(0, 5).map(c => `<li>${c}</li>`).join('')}</ul>` : '<p>2026年新設の学科のため、これから実績ができます。</p>'}</div>`;
+      <div><h4>先輩の主な就職先</h4>${co ? `<ul>${co.slice(0, 5).map(c => `<li>${c}</li>`).join('')}</ul>` : `<p>${d.years.match(/20\d\d年新設/)?.[0] || '新設'}の学科のため、これから実績ができます。</p>`}</div>`;
   }
   sel.addEventListener('change', show);
   sel.value = String(jobs.findIndex(j => j.n === 'セキュリティエンジニア' && j.k === 'information-system'));
@@ -151,6 +151,6 @@
   pick(0);
 })();
 </script>
-<script src="color.js?v=20261114"></script>
+<script src="color.js?v=20261114g"></script>
 </body>
 </html>

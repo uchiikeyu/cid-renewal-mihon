@@ -13,7 +13,9 @@
   const MAJOR_PLAYS = {
     code: { title: 'プログラムを正しい順に並べよう', fn: playCode },
     mail: { title: 'あやしいメールを見つけよう', fn: playMail },
-    flow: { title: 'コードを書かずに、作業を自動化しよう', fn: playFlow }
+    flow: { title: 'コードを書かずに、作業を自動化しよう', fn: playFlow },
+    views: { title: '三面図から、正しい部品を選ぼう', fn: playViews },
+    anomaly: { title: '衛星のデータから、おかしな所を見つけよう', fn: playAnomaly }
   };
 
   let html = `
@@ -106,7 +108,7 @@
       const o = CID.DEPTS[k];
       return `<a class="dept-card cut" href="${k}.html" style="--dept:${o.color}"><figure>${img(o.photos[0], '')}</figure><div class="in"><span class="yrs">${o.years}</span><h3>${o.name}</h3></div></a>`;
     }).join('')}</div>
-    <p style="margin-top:28px"><a class="btn-ghost" href="admission.html#fee">この学科の学費を見る</a></p></div></section>`;
+    <p style="margin-top:28px">${d.feeNote ? `<span style="color:var(--sky)">${d.feeNote}</span>` : '<a class="btn-ghost" href="admission.html#fee">この学科の学費を見る</a>'}</p></div></section>`;
 
   root.innerHTML = html;
 
@@ -247,5 +249,126 @@
           : v[2] === 1 ? '全校生徒に通知が飛んでしまいました。知らせる相手を見直しましょう。'
             : 'お題の通りには動いていません。きっかけとやることを見直しましょう。';
     };
+  }
+
+  // ---------- 専攻ごとの体験（スペーステックエンジニア学科） ----------
+  // 宇宙プロダクト専攻：三面図（正面・上・右）から、正しい立体を選ぶ。立体は小さな立方体の組み合わせ
+  function playViews(root, out) {
+    const V = (s) => s.split(' ').map(t => t.split(',').map(Number)); // "x,y,z x,y,z ..."
+    const QS = [
+      { name: 'L字の金具', ok: V('0,0,0 1,0,0 2,0,0 0,1,0 1,1,0 2,1,0 0,0,1 1,0,1 2,0,1'),
+        ng: [V('0,0,0 1,0,0 2,0,0 0,1,0 1,1,0 2,1,0 0,1,1 1,1,1 2,1,1'), V('0,0,0 1,0,0 2,0,0 0,1,0 1,1,0 2,1,0 0,0,1 1,0,1')] },
+      { name: '段のある台座', ok: V('0,0,0 1,0,0 2,0,0 0,1,0 1,1,0 2,1,0 0,2,0 1,2,0 2,2,0 0,0,1 1,0,1 0,1,1 1,1,1 0,0,2'),
+        ng: [V('0,0,0 1,0,0 2,0,0 0,1,0 1,1,0 2,1,0 0,2,0 1,2,0 2,2,0 0,0,1 1,0,1 0,1,1 1,1,1 1,1,2'), V('0,0,0 1,0,0 2,0,0 0,1,0 1,1,0 2,1,0 0,2,0 1,2,0 2,2,0 1,1,1 2,1,1 1,2,1 2,2,1 2,2,2')] },
+      { name: 'みぞのある部品', ok: V('0,0,0 1,0,0 2,0,0 0,1,0 1,1,0 2,1,0 0,0,1 0,1,1 2,0,1 2,1,1'),
+        ng: [V('0,0,0 1,0,0 2,0,0 0,1,0 1,1,0 2,1,0 0,0,1 1,0,1 2,0,1 0,1,1 2,1,1'), V('0,0,0 1,0,0 2,0,0 0,1,0 1,1,0 2,1,0 0,0,1 0,1,1 2,0,1')] }
+    ];
+    // 立体を、斜め上から見た絵（等角図）にする
+    function iso(vox, size = 22) {
+      const c = Math.cos(Math.PI / 6) * size, sn = Math.sin(Math.PI / 6) * size;
+      const P = (x, y, z) => [(x - y) * c, (x + y) * sn - z * size];
+      const order = vox.slice().sort((a, b) => (a[0] + a[1] + a[2]) - (b[0] + b[1] + b[2]) || a[2] - b[2]);
+      let g = '';
+      const xs = [], ys = [];
+      const poly = (pts, fill) => { pts.forEach(([x, y]) => { xs.push(x); ys.push(y); }); g += `<polygon points="${pts.map(p => p.map(v => v.toFixed(1)).join(',')).join(' ')}" fill="${fill}" stroke="#081330" stroke-width="1.2" stroke-linejoin="round"/>`; };
+      order.forEach(([x, y, z]) => {
+        poly([P(x, y, z + 1), P(x + 1, y, z + 1), P(x + 1, y + 1, z + 1), P(x, y + 1, z + 1)], '#E9EEF7');   // 上の面
+        poly([P(x, y + 1, z), P(x + 1, y + 1, z), P(x + 1, y + 1, z + 1), P(x, y + 1, z + 1)], '#AFC0DC'); // 手前の面
+        poly([P(x + 1, y, z), P(x + 1, y + 1, z), P(x + 1, y + 1, z + 1), P(x + 1, y, z + 1)], '#7D93BC'); // 右の面
+      });
+      const x0 = Math.min(...xs) - 6, y0 = Math.min(...ys) - 6, w = Math.max(...xs) - x0 + 6, h = Math.max(...ys) - y0 + 6;
+      return `<svg viewBox="${x0.toFixed(0)} ${y0.toFixed(0)} ${w.toFixed(0)} ${h.toFixed(0)}" width="150" height="120" aria-hidden="true">${g}</svg>`;
+    }
+    // 三面図：正面（左右×高さ）、上（左右×奥行き）、右（奥行き×高さ）
+    const proj = (vox, f) => new Set(vox.map(f));
+    const VIEWS = [['正面', v => `${v[0]},${2 - v[2]}`], ['上', v => `${v[0]},${v[1]}`], ['右', v => `${2 - v[1]},${2 - v[2]}`]];
+    const key = vox => VIEWS.map(([, f]) => [...proj(vox, f)].sort().join(';')).join('|');
+    function views(vox) {
+      return VIEWS.map(([label, f]) => {
+        const set = proj(vox, f);
+        let cells = '';
+        for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) cells += `<rect x="${c * 20 + 2}" y="${r * 20 + 2}" width="18" height="18" fill="${set.has(`${c},${r}`) ? '#F2B705' : 'rgba(255,255,255,.06)'}"/>`;
+        return `<figure class="tv"><svg viewBox="0 0 62 62" width="78" height="78" aria-hidden="true">${cells}</svg><figcaption>${label}</figcaption></figure>`;
+      }).join('');
+    }
+    let qi = 0, score = 0;
+    function draw() {
+      const q = QS[qi];
+      const opts = [{ v: q.ok, ok: true }, ...q.ng.map(v => ({ v, ok: false }))].sort(() => Math.random() - .5);
+      root.innerHTML = `<p class="note">問題 ${qi + 1} / ${QS.length}　${q.name}の三面図です。黄色は、その方向から見たときに部品が見える所です。</p>
+        <div class="tv-row">${views(q.ok)}</div>
+        <div class="ctl-row tv-opts">${opts.map((o, i) => `<button class="chip tv-opt" type="button" data-i="${i}" aria-label="立体 ${i + 1}">${iso(o.v)}</button>`).join('')}</div>`;
+      root.querySelectorAll('.tv-opt').forEach(b => b.onclick = () => {
+        const o = opts[+b.dataset.i];
+        if (o.ok) score++;
+        root.querySelectorAll('.tv-opt').forEach((x, i) => { x.disabled = true; x.style.borderColor = opts[i].ok ? '#3CCB7F' : (x === b ? '#DF032E' : ''); });
+        const diff = VIEWS.filter(([, f]) => [...proj(o.v, f)].sort().join() !== [...proj(q.ok, f)].sort().join()).map(([l]) => l);
+        out.textContent = o.ok ? '正解！ 3つの方向から見た形が、すべて一致しています。' : `ちがいます。この立体は「${diff.join('」「')}」から見た形が合いません。`;
+        setTimeout(() => {
+          qi++;
+          if (qi < QS.length) { out.textContent = ''; draw(); return; }
+          root.innerHTML = '<div class="ctl-row"><button class="chip" type="button" data-again>もう一度</button></div>';
+          root.querySelector('[data-again]').onclick = () => { qi = 0; score = 0; out.textContent = ''; draw(); };
+          out.textContent = `${QS.length}問中 ${score}問 正解。図面から立体を思い描く力は、CADで部品を設計するときの基本です。`;
+        }, 1900);
+      });
+    }
+    // まちがいの立体が、三面図のどこかで必ず正解と違うことを確かめておく
+    QS.forEach(q => q.ng.forEach(v => { if (key(v) === key(q.ok)) console.warn('三面図が同じになる問題があります:', q.name); }));
+    draw();
+  }
+
+  // 宇宙データ専攻：衛星から届いたデータのグラフで、おかしな所を押す
+  function playAnomaly(root, out) {
+    const N = 240; // 24時間ぶん（6分おき）
+    const ROUNDS = [
+      { title: '電池の温度（℃）', base: 20, amp: 8, kind: 'spike', hint: '一瞬だけ、ありえないほど高くなった所があります。' },
+      { title: '通信機の電圧（V）', base: 12, amp: 1.2, kind: 'drop', hint: '値が0のまま動かない所があります。センサーの故障かもしれません。' },
+      { title: '本体の温度（℃）', base: 18, amp: 5, kind: 'drift', hint: '途中から、少しずつ上がり続けています。ヒーターの不具合かもしれません。' }
+    ];
+    let ri = 0, score = 0;
+    function data(r) {
+      const v = [], at = 60 + Math.floor(Math.random() * 120);
+      for (let i = 0; i < N; i++) {
+        let y = r.base + r.amp * Math.sin(i / 15 * Math.PI * 2) + (Math.random() - .5) * r.amp * .25;
+        if (r.kind === 'spike' && (i === at || i === at + 1)) y += r.amp * 2.6;
+        if (r.kind === 'drop' && i >= at && i < at + 7) y = 0;
+        if (r.kind === 'drift' && i >= at) y += (i - at) * r.amp * .045;
+        v.push(y);
+      }
+      const win = r.kind === 'drift' ? [at - 6, at + 45] : [at - 4, at + (r.kind === 'drop' ? 10 : 5)];
+      return { v, at, win };
+    }
+    function draw() {
+      const r = ROUNDS[ri], d = data(r);
+      const min = Math.min(...d.v), max = Math.max(...d.v), W = 480, H = 160;
+      const pts = d.v.map((y, i) => `${(i / (N - 1) * W).toFixed(1)},${(H - 14 - (y - min) / (max - min || 1) * (H - 24)).toFixed(1)}`).join(' ');
+      root.innerHTML = `<p class="note">問題 ${ri + 1} / ${ROUNDS.length}　${r.title}。地球を1周するたびに、昼と夜で値が上下します。いつもと違う所を押してください。</p>
+        <svg class="an-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${r.title}のグラフ">
+          ${[0, 6, 12, 18, 24].map(hh => `<line x1="${hh / 24 * W}" y1="0" x2="${hh / 24 * W}" y2="${H}" stroke="#fff" stroke-opacity=".08"/><text x="${Math.min(W - 22, hh / 24 * W + 3)}" y="${H - 3}" fill="#9DBEF0" font-size="10">${hh}時</text>`).join('')}
+          <rect data-mark x="0" y="0" width="0" height="${H}" fill="#3CCB7F" opacity="0"/>
+          <polyline points="${pts}" fill="none" stroke="#F2B705" stroke-width="1.6"/>
+          <line data-cur x1="-10" y1="0" x2="-10" y2="${H}" stroke="#fff" stroke-dasharray="3 3"/>
+        </svg>`;
+      const svg = root.querySelector('svg'), mark = root.querySelector('[data-mark]'), cur = root.querySelector('[data-cur]');
+      let done = false;
+      svg.addEventListener('pointermove', e => { if (done) return; const b = svg.getBoundingClientRect(); const x = (e.clientX - b.left) / b.width * W; cur.setAttribute('x1', x); cur.setAttribute('x2', x); });
+      svg.addEventListener('click', e => {
+        if (done) return;
+        const b = svg.getBoundingClientRect(), i = Math.round((e.clientX - b.left) / b.width * (N - 1));
+        const ok = i >= d.win[0] && i <= d.win[1];
+        done = true; if (ok) score++;
+        mark.setAttribute('x', d.win[0] / (N - 1) * W); mark.setAttribute('width', (d.win[1] - d.win[0]) / (N - 1) * W); mark.setAttribute('opacity', '.28');
+        out.textContent = ok ? `正解！ ${r.hint}` : `緑の所が異常です。${r.hint}`;
+        setTimeout(() => {
+          ri++;
+          if (ri < ROUNDS.length) { out.textContent = ''; draw(); return; }
+          root.innerHTML = '<div class="ctl-row"><button class="chip" type="button" data-again>もう一度</button></div>';
+          root.querySelector('[data-again]').onclick = () => { ri = 0; score = 0; out.textContent = ''; draw(); };
+          out.textContent = `${ROUNDS.length}問中 ${score}問 正解。衛星から届く大量のデータから異常を見つけるのは、データ分析とAIの大切な仕事です。`;
+        }, 2600);
+      });
+    }
+    draw();
   }
 })();

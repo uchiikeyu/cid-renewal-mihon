@@ -1,11 +1,11 @@
-/* カラー版（2026-11-09）：紺の地はそのまま、8学科の色を主役にする
-   色には意味を持たせる。8色の帯＝8学科、学科の写真や体験はその学科の色 */
+/* カラー版（2026-11-09）：紺の地はそのまま、9学科の色を主役にする
+   色には意味を持たせる。9色の帯＝9学科、学科の写真や体験はその学科の色 */
 :root {
   --c-ict: #4A5CF0; --c-is: #00A0E9; --c-agri: #22A33A; --c-game: #8040C0;
-  --c-cre: #F05A28; --c-pop: #FF4C7D; --c-video: #F08C1E; --c-elec: #1A9A8A;
-  /* 8学科の色を等分に並べた帯。このサイトの目印 */
-  --spectrum: linear-gradient(90deg, var(--c-ict) 0 12.5%, var(--c-is) 0 25%, var(--c-agri) 0 37.5%, var(--c-game) 0 50%, var(--c-cre) 0 62.5%, var(--c-pop) 0 75%, var(--c-video) 0 87.5%, var(--c-elec) 0);
-  --spectrum-soft: linear-gradient(110deg, var(--c-ict), var(--c-is), var(--c-agri), var(--c-game), var(--c-cre), var(--c-pop), var(--c-video), var(--c-elec), var(--c-ict));
+  --c-cre: #F05A28; --c-pop: #FF4C7D; --c-video: #F08C1E; --c-elec: #1A9A8A; --c-space: #F2B705;
+  /* 9学科の色を等分に並べた帯。このサイトの目印 */
+  --spectrum: linear-gradient(90deg, var(--c-ict) 0 11.11%, var(--c-is) 0 22.22%, var(--c-agri) 0 33.33%, var(--c-game) 0 44.44%, var(--c-cre) 0 55.56%, var(--c-pop) 0 66.67%, var(--c-video) 0 77.78%, var(--c-elec) 0 88.89%, var(--c-space) 0);
+  --spectrum-soft: linear-gradient(110deg, var(--c-ict), var(--c-is), var(--c-agri), var(--c-game), var(--c-cre), var(--c-pop), var(--c-video), var(--c-elec), var(--c-space), var(--c-ict));
 }
 
 /* ヘッダーの下と、フッターの上に8色の帯 */
@@ -40,7 +40,7 @@
 .is-color .panel .c { z-index: 3; }
 .is-color .panel:hover::after, .is-color .panel:focus-visible::after, .is-color .panel.is-center::after { opacity: 0; }
 .is-color .panel:hover img, .is-color .panel:focus-visible img, .is-color .panel.is-center img { filter: none; }
-.is-color .panel .y { background: var(--dc); border-left: 0; }
+.is-color .panel .y { background: var(--dc); border-left: 0; color: var(--dc-ink, #fff); }
 .is-color .panel .go { border-bottom-width: 3px; }
 .is-color .track-nav .prog { height: 4px; }
 .is-color .track-nav .prog i { background: var(--spectrum); background-size: calc(100vw - 2 * var(--gutter)) 100%; }
@@ -93,6 +93,7 @@
 /* ページごとの色。学科ページはその学科の色 */
 .is-color { --pc: var(--c-ict); }
 .is-color[data-dept] { --pc: var(--dept); }
+.is-color[data-dept="space-tech-engineer"], .is-color[data-page="camera"] { --pc-ink: #081330; }
 .is-color[data-page="about"], .is-color[data-page="instructor"] { --pc: var(--c-ict); }
 .is-color[data-page="learning"], .is-color[data-page="contact"], .is-color[data-page="intl"] { --pc: var(--c-is); }
 .is-color[data-page="career"], .is-color[data-page="recruitment"] { --pc: var(--c-agri); }
@@ -101,6 +102,7 @@
 .is-color[data-page="campus-life"], .is-color[data-page="news"], .is-color[data-page="open-campus"] { --pc: var(--c-pop); }
 .is-color[data-page="graduate"], .is-color[data-page="working-adult"] { --pc: var(--c-video); }
 .is-color[data-page="access"], .is-color[data-page="recruiting"] { --pc: var(--c-elec); }
+.is-color[data-page="camera"] { --pc: var(--c-space); }
 
 /* ヘッダーの8色の帯は、下層ページでは常に出す */
 .is-color:not(.top-page) .site-head::after { opacity: 1; }
@@ -120,9 +122,9 @@
   border-color: transparent; border-top: 3px solid var(--pc);
   background: radial-gradient(700px 320px at 100% 0%, color-mix(in srgb, var(--pc) 20%, transparent), transparent 70%), var(--navy-2);
 }
-.is-color .chip[aria-pressed="true"] { background-color: var(--pc); border-color: var(--pc); color: #fff; box-shadow: 0 0 16px -2px var(--pc); }
+.is-color .chip[aria-pressed="true"] { background-color: var(--pc); border-color: var(--pc); color: var(--pc-ink, #fff); box-shadow: 0 0 16px -2px var(--pc); }
 .is-color .chip:hover { border-color: var(--pc); }
-.is-color .lab-stage .chip[aria-pressed="true"] { background-color: var(--lc); border-color: var(--lc); box-shadow: 0 0 16px -2px var(--lc); }
+.is-color .lab-stage .chip[aria-pressed="true"] { background-color: var(--lc); border-color: var(--lc); box-shadow: 0 0 16px -2px var(--lc); color: var(--lc-ink, #fff); }
 .is-color .lab-stage .chip:hover { border-color: var(--lc); }
 .is-color .meter > i { background: var(--spectrum); background-size: 300px 100%; }
 

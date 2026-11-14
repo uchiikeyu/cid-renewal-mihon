@@ -1,4 +1,4 @@
-// トップページ：見出しの文字の形に写真をくり抜く最初の画面と、8学科の横に流れる写真
+// トップページ：見出しの文字の形に写真をくり抜く最初の画面と、9学科の横に流れる写真
 // 使う人：index.html だけ。depts-data.js の後に読み込む
 (function () {
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -107,11 +107,11 @@
   (document.fonts ? document.fonts.load('900 100px "Zen Kaku Gothic New"', '未来をツクル人になる。') : Promise.resolve())
     .catch(() => {}).then(() => { build(); requestAnimationFrame(frame); });
 
-  /* ---------- 8つの学科：PCでは縦スクロールで横に流す ---------- */
+  /* ---------- 9つの学科：PCでは縦スクロールで横に流す ---------- */
   const PH = CID.PEOPLE_PHOTO;
   const track = $('track'), people = $('people'), prog = $('track-prog');
   track.innerHTML = CID.DEPT_ORDER.map(k => { const d = CID.DEPTS[k];
-    return `<a class="panel" href="${k}.html" style="--dc:${d.color}"><img src="${CID.img(PH[k] || d.photos[0])}" alt="" loading="lazy"><div class="c"><span class="y">${d.years}</span><h3>${d.name}</h3><p class="k">${d.catch}</p><span class="go">学科を見る</span></div></a>`; }).join('');
+    return `<a class="panel" href="${k}.html" style="--dc:${d.color};--dc-ink:${CID.ink(d.color)}"><img src="${CID.img(PH[k] || d.photos[0])}" alt="" loading="lazy"><div class="c"><span class="y">${d.years}</span><h3>${d.name}</h3><p class="k">${d.catch}</p><span class="go">学科を見る</span></div></a>`; }).join('');
   const wideQ = matchMedia('(min-width: 900px) and (prefers-reduced-motion: no-preference)');
   let span = 0;
   function setupScrub() {

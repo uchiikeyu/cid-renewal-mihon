@@ -3,7 +3,7 @@
 .cam-wrap { padding: 0 var(--gutter); }
 .cam {
   position: relative; overflow: hidden;
-  max-width: 1400px; margin: 0 auto;
+  width: 100%; max-width: 1400px; margin: 0 auto;
   aspect-ratio: 16 / 9; max-height: 82svh; min-height: 420px;
   background:
     linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px) 0 0 / 32px 32px,

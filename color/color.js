@@ -1,6 +1,6 @@
 // カラー版だけで使う動き。各ページの最後に読み込む（build_color.py が差し込む）
 (function () {
-  const SPEC = ['#4A5CF0', '#00A0E9', '#22A33A', '#8040C0', '#F05A28', '#FF4C7D', '#F08C1E', '#1A9A8A'];
+  const SPEC = ['#4A5CF0', '#00A0E9', '#22A33A', '#8040C0', '#F05A28', '#FF4C7D', '#F08C1E', '#1A9A8A', '#F2B705'];
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
   const note = document.querySelector('.mihon-note');
@@ -14,7 +14,7 @@
   if (svg && tint) {
     // 文字のふちを8色に。文字を組み直したときも塗り直す
     const paint = () => svg.querySelectorAll('.o text').forEach((t, i) => {
-      t.setAttribute('stroke', SPEC[i % 8]); t.setAttribute('stroke-width', '2');
+      t.setAttribute('stroke', SPEC[i % SPEC.length]); t.setAttribute('stroke-width', '2');
     });
     new MutationObserver(paint).observe(svg, { childList: true });
     paint();
@@ -26,7 +26,7 @@
     })();
   }
 
-  // ---------- トップ：8学科は、画面の真ん中にある学科の色で背景が染まる ----------
+  // ---------- トップ：9学科は、画面の真ん中にある学科の色で背景が染まる ----------
   const hero = document.getElementById('cinema'), reel = document.getElementById('people'), track = document.getElementById('track');
   let last = null;
   function onScroll() {
@@ -69,13 +69,13 @@
     syncLab();
   }
 
-  // ---------- 下層ページ：カードや一覧に、8学科の色を順に割り当てる ----------
+  // ---------- 下層ページ：カードや一覧に、9学科の色を順に割り当てる ----------
   const SEL = '.oc-list .oc, .news-card, .work, .project, .link-list li, .steps li, .split-2 > div, .people > *, .facts > .fact';
   const cycle = () => {
     const seen = new Map();
     document.querySelectorAll(SEL).forEach(el => {
       const k = el.parentElement; const i = seen.get(k) || 0; seen.set(k, i + 1);
-      if (!el.style.getPropertyValue('--ac')) el.style.setProperty('--ac', SPEC[i % 8]);
+      if (!el.style.getPropertyValue('--ac')) el.style.setProperty('--ac', SPEC[i % SPEC.length]);
     });
   };
   cycle();

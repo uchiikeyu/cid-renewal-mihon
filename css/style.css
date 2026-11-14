@@ -226,7 +226,7 @@ p { margin: 0; }
   .cinema-foot .hint i::after { animation: none; }
 }
 
-/* ===== 8つの学科：人が主役の写真が横に流れる ===== */
+/* ===== 9つの学科：人が主役の写真が横に流れる ===== */
 .reel-pin { padding: clamp(72px, 9vw, 112px) 0 72px; }
 .reel-h { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 36px; }
 .reel-h h2 { font-size: var(--t-3xl); line-height: 1.1; flex: 1 1 auto; white-space: nowrap; }
@@ -271,10 +271,10 @@ p { margin: 0; }
 }
 .btn-ghost:hover { border-color: var(--white); }
 /* ===== 学科ひと口体験（トップ） =====
-   上に8学科の写真タイル、下に「学科の写真＋お題」と「方眼の作業台」を並べた舞台。
+   上に9学科の写真タイル、下に「学科の写真＋お題」と「方眼の作業台」を並べた舞台。
    --lc は選んだ学科の色。光・ボタン・結果の線に使う */
 .lab { display: flex; flex-direction: column; gap: 2px; }
-.lab-tabs { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 2px; }
+.lab-tabs { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 2px; }
 .lab-tab {
   position: relative; aspect-ratio: 1 / 1; overflow: hidden;
   border: 0; padding: 0; cursor: pointer; text-align: left;
@@ -346,7 +346,7 @@ p { margin: 0; }
   font-size: var(--t-l);
 }
 .lab-stage .lab-result:not(:empty) { padding-left: 14px; border-left: 4px solid var(--lc); }
-.lab-stage .chip[aria-pressed="true"] { background-color: var(--lc); border-color: var(--lc); color: #fff; box-shadow: 0 0 16px -2px var(--lc); }
+.lab-stage .chip[aria-pressed="true"] { background-color: var(--lc); border-color: var(--lc); color: var(--lc-ink, #fff); box-shadow: 0 0 16px -2px var(--lc); }
 .lab-stage .chip:hover { border-color: var(--lc); }
 .lab-after {
   border-top: 1px solid rgba(143, 180, 232, .2);
@@ -371,6 +371,19 @@ p { margin: 0; }
   .lab-after { grid-template-columns: 1fr; }
   .lab-after .links { justify-content: flex-start; }
 }
+
+/* 人工衛星の姿勢制御（スペーステック） */
+.sat-wrap { display: flex; flex-direction: column; gap: 6px; max-width: 520px; }
+.sat-svg { width: 100%; background: #040A1C; }
+.sat-graph { width: 100%; background: rgba(255, 255, 255, .04); }
+
+/* 三面図・データの異常探し（スペーステック） */
+.tv-row { display: flex; flex-wrap: wrap; gap: 14px; }
+.tv { margin: 0; text-align: center; font-size: .8rem; color: var(--sky); }
+.tv-opts { margin-top: 14px; }
+.tv-opt { padding: 6px; min-width: 0; background: rgba(255, 255, 255, .04); }
+.tv-opt svg { display: block; max-width: 100%; height: auto; }
+.an-svg { width: 100%; max-width: 560px; background: #040A1C; cursor: crosshair; touch-action: manipulation; }
 
 /* 体験の部品 */
 .ctl-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
