@@ -11,6 +11,10 @@ for f in sorted(glob.glob('*.html')):
     ver = (re.search(r'\?v=([0-9a-z]+)', s) or [None, 'x'])[1]
     s = s.replace('<html lang="ja">', '<html lang="ja" data-fx="spectrum">', 1)
     s = s.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<script>window.CID_ROOT = \'../\';</script>', 1)
+    # 正式なURL・共有用のURLは、カラー版のURLにする（画像は本体のものを共用）
+    s = s.replace('<link rel="canonical" href="https://uchiikeyu.github.io/cid-renewal-mihon/', '<link rel="canonical" href="https://uchiikeyu.github.io/cid-renewal-mihon/color/')
+    s = s.replace('<meta property="og:url" content="https://uchiikeyu.github.io/cid-renewal-mihon/', '<meta property="og:url" content="https://uchiikeyu.github.io/cid-renewal-mihon/color/')
+    s = s.replace('href="favicon.svg"', 'href="../favicon.svg"').replace('href="images/apple-touch-icon.png"', 'href="../images/apple-touch-icon.png"')
     s = s.replace('href="css/', 'href="../css/').replace('src="js/', 'src="../js/').replace('images/cid/', '../images/cid/')
     s = re.sub(r'(<link rel="stylesheet" href="\.\./css/pages\.css[^"]*">)', r'\1\n<link rel="stylesheet" href="color.css?v=' + ver + '">', s, 1)
     s = s.replace('<body ', '<body class="is-color" ', 1)

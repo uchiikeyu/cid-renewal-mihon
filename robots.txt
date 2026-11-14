@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /
+# 見本のあいだは検索に出さない。本番では Disallow を外す
+Sitemap: https://uchiikeyu.github.io/cid-renewal-mihon/sitemap.xml

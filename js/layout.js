@@ -67,7 +67,7 @@
         <div><p class="foot-h">学校を知る</p><ul>${MAIN.slice(1).map(([, h, t]) => `<li><a href="${h}">${t}</a></li>`).join('')}${links(SUB)}</ul></div>
         <div><p class="foot-h">訪問者別</p><ul>${links(VISIT)}</ul><p class="foot-h">留学生の方へ</p><ul>${links(INTL)}</ul></div>
       </div>
-      <p class="foot-copy">© 学校法人 有坂中央学園 CID 中央情報大学校</p>
+      <p class="foot-copy">© 学校法人 有坂中央学園 CID 中央情報大学校　最終更新 2026年11月14日</p>
     </div>
   </footer>`;
 
@@ -89,6 +89,6 @@
 
   // 全ページ共通の動き
   const fx = document.createElement('script');
-  fx.src = (window.CID_ROOT || '') + 'js/fx.js?v=20261112b';
+  fx.src = (window.CID_ROOT || '') + 'js/fx.js?v=20261114';
   document.body.appendChild(fx);
 })();
